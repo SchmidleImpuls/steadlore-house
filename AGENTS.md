@@ -289,3 +289,15 @@ Prefer:
 - no action
 
 Do not create charming fog.
+
+## Brand use
+
+The official Steadlore logo may be linked from the README to identify the official Steadlore House repository.
+
+Do not copy Steadlore logo files, icons, wordmarks, or other visual brand assets into this repository unless explicitly requested.
+
+The AGPL-3.0 license applies to source code. It does not grant rights to use Steadlore names, logos, icons, wordmarks, visual identity, or related brand assets.
+
+Forks and derivatives must not present themselves as official Steadlore projects and should replace official branding with their own identity unless they have prior written permission.
+
+Follow the [Schmidle Impuls brand assets repository](https://github.com/SchmidleImpuls/brand-assets) for brand usage rules and permission requirements.

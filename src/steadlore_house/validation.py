@@ -128,6 +128,8 @@ def validate_runbook_data(data: Mapping[str, Any], *, path: str) -> None:
     _require_list(data, "first_checks", path, errors)
     _require_list(data, "escalation_path", path, errors)
     _require_list(data, "do_not_touch", path, errors)
+    if "temporary_workarounds" in data and not isinstance(data["temporary_workarounds"], list):
+        errors.append(f"{path}.temporary_workarounds must be a list")
 
     symptom = str(data.get("symptom", ""))
     _validate_symptom_title(symptom, f"{path}.symptom", errors)

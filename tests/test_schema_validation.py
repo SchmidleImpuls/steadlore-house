@@ -82,6 +82,7 @@ def _valid_runbook_data() -> dict:
         "applies_to": ["home-assistant"],
         "plain_summary": "Smart-home controls may be unavailable.",
         "probably_still_ok": ["Internet and Wi-Fi are not necessarily affected."],
+        "temporary_workarounds": ["Use physical wall switches for lights."],
         "household_impact": "Some automations may not work.",
         "first_checks": [{"text": "Try the physical wall switch.", "action_class": "safe"}],
         "escalation_path": ["Contact the trusted helper."],

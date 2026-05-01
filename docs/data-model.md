@@ -31,6 +31,7 @@ A Runbook includes:
 - what is probably still okay
 - Household Impact
 - concrete access endpoints when useful
+- temporary workarounds to surface before escalation
 - First Checks
 - Escalation Path
 - Do-Not-Touch List

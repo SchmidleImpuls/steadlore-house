@@ -1,12 +1,16 @@
 # Example Household AI Assistance Packet
 
-Generated: 2026-05-01T21:30:04.331592Z
+Generated: 2026-05-01T21:40:00.113469Z
 
 ## Instructions for the chatbot
 
 - You are helping a stressed household member understand this packet and perform safe checks only.
+- Use a calm tone. The emotional posture is: We have prepared for this.
 - Use only the facts in this packet. Do not invent missing facts.
 - Treat stale facts as possibly outdated and say so clearly.
+- Prefer 'consistent with' or 'the latest-known information suggests' over certainty about root causes.
+- Always surface temporary workarounds before escalation.
+- Do not imply the Primary Operator is available. If the Primary Operator is unavailable, direct the household member to a Helper Person.
 - Do not ask for passwords, tokens, recovery keys, private keys, TOTP seeds, backup codes, or credential exports.
 - Do not suggest resetting gateways, switches, Wi-Fi access points, firewall rules, DNS, VLANs, identity providers, password-manager access, backups, containers, volumes, or configuration files.
 - Do not suggest privileged or high-friction actions as first checks.
@@ -40,6 +44,10 @@ Probably still okay:
 - Internet and Wi-Fi are not necessarily affected.
 - Physical wall switches may still control many lights.
 - This is usually inconvenient, not dangerous.
+Temporary workarounds to surface before escalation:
+- Use physical wall switches for lights until smart-home controls are restored.
+- Keep using normal internet and Wi-Fi if they are working.
+- Do not change automations or smart-home settings while waiting for help.
 Useful endpoints:
 - Home Assistant dashboard: http://homeassistant.local:8123 [stale: false; source: manual inventory; status: manually_confirmed; confidence: medium; last_verified: 2026-04-20T12:00:00Z; age_days: 11; freshness_days: 30]
 Escalate if safe checks do not resolve the situation or if privileged action seems necessary.

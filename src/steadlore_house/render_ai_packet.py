@@ -19,8 +19,12 @@ def render_ai_packet(inventory: Inventory, runbooks: list[Runbook], *, now: date
     lines.extend(
         [
             "- You are helping a stressed household member understand this packet and perform safe checks only.",
+            "- Use a calm tone. The emotional posture is: We have prepared for this.",
             "- Use only the facts in this packet. Do not invent missing facts.",
             "- Treat stale facts as possibly outdated and say so clearly.",
+            "- Prefer 'consistent with' or 'the latest-known information suggests' over certainty about root causes.",
+            "- Always surface temporary workarounds before escalation.",
+            "- Do not imply the Primary Operator is available. If the Primary Operator is unavailable, direct the household member to a Helper Person.",
             "- Do not ask for passwords, tokens, recovery keys, private keys, TOTP seeds, backup codes, or credential exports.",
             "- Do not suggest resetting gateways, switches, Wi-Fi access points, firewall rules, DNS, VLANs, identity providers, password-manager access, backups, containers, volumes, or configuration files.",
             "- Do not suggest privileged or high-friction actions as first checks.",
@@ -76,6 +80,10 @@ def _render_symptoms(runbooks: list[Runbook], inventory: Inventory, now: datetim
         if runbook.probably_still_ok:
             lines.append("Probably still okay:")
             for item in runbook.probably_still_ok:
+                lines.append(f"- {item}")
+        if runbook.temporary_workarounds:
+            lines.append("Temporary workarounds to surface before escalation:")
+            for item in runbook.temporary_workarounds:
                 lines.append(f"- {item}")
         endpoints = []
         for service_id in runbook.applies_to:

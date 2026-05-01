@@ -14,12 +14,17 @@ def test_render_ai_packet_includes_chatbot_boundaries() -> None:
     assert "# Example Household AI Assistance Packet" in packet
     assert "## Instructions for the chatbot" in packet
     assert "perform safe checks only" in packet
+    assert "We have prepared for this" in packet
+    assert "Always surface temporary workarounds before escalation" in packet
+    assert "Do not imply the Primary Operator is available" in packet
     assert "Do not invent missing facts" in packet
     assert "Do not ask for passwords" in packet
     assert "## Safety policy" in packet
     assert "## Symptom runbooks" in packet
     assert "### Symptom: Lights or automations are not working" in packet
     assert "http://homeassistant.local:8123" in packet
+    assert "Temporary workarounds to surface before escalation:" in packet
+    assert "Use physical wall switches for lights until smart-home controls are restored." in packet
     assert "[stale: true;" in packet
     assert "## Unknowns the chatbot must not invent" in packet
     assert "container redeploy" not in packet

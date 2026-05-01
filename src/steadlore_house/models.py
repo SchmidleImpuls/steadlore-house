@@ -164,6 +164,7 @@ class Runbook:
     applies_to: list[str]
     plain_summary: str
     probably_still_ok: list[str]
+    temporary_workarounds: list[str]
     helper_note: str
     household_impact: str
     first_checks: list[GuidedAction]
@@ -178,6 +179,7 @@ class Runbook:
             applies_to=list(data.get("applies_to", [])),
             plain_summary=data["plain_summary"],
             probably_still_ok=list(data.get("probably_still_ok", [])),
+            temporary_workarounds=list(data.get("temporary_workarounds", [])),
             helper_note=data.get("helper_note", ""),
             household_impact=data["household_impact"],
             first_checks=[GuidedAction.from_dict(item) for item in data.get("first_checks", [])],

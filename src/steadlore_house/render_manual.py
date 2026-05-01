@@ -138,6 +138,11 @@ def _render_runbooks(runbooks: list[Runbook], inventory: Inventory, now: datetim
             lines.append("")
         lines.append(f"Household impact: {runbook.household_impact}")
         lines.append("")
+        if runbook.temporary_workarounds:
+            lines.append("What you can do meanwhile:")
+            for item in runbook.temporary_workarounds:
+                lines.append(f"- {item}")
+            lines.append("")
         endpoints = []
         for service_id in runbook.applies_to:
             service = service_by_id.get(service_id)

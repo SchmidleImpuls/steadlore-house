@@ -1,6 +1,6 @@
 # Example Household Continuity Manual
 
-Generated: 2026-05-01T21:30:03.997776Z
+Generated: 2026-05-01T21:39:59.772870Z
 Audience: trusted people and operators
 
 > This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.
@@ -26,6 +26,11 @@ What is probably still okay:
 
 Household impact: Some convenience automations and dashboards may be unavailable. Treat this as a smart-home problem first, not as a whole-house infrastructure failure.
 
+What you can do meanwhile:
+- Use physical wall switches for lights until smart-home controls are restored.
+- Keep using normal internet and Wi-Fi if they are working.
+- Do not change automations or smart-home settings while waiting for help.
+
 Useful links to try:
 - Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 11 days ago)
 
@@ -40,7 +45,7 @@ What not to touch:
 - Do not change firewall, DNS, VLAN, identity-provider, or password-manager settings.
 
 Who to contact or what to do next:
-- If physical switches work and only automations are unavailable, wait for the operator if that is realistic, or contact the trusted helper listed in this manual.
+- If physical switches work and only automations are unavailable, wait for the operator if that is realistic. If the operator is unavailable, contact the trusted helper listed in this manual.
 - If internet or Wi-Fi also appear unavailable, use the separate internet or Wi-Fi runbook when one exists. Do not assume this smart-home symptom is the cause.
 - Secret references identify where access information is kept; this manual does not contain passwords or recovery keys.
 

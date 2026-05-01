@@ -19,6 +19,8 @@ def test_render_manual_includes_staleness_and_modes() -> None:
     assert "## Who Can Help" in manual
     assert "## For Helper Persons" in manual
     assert "### Symptom Notes" in manual
+    assert "What you can do meanwhile:" in manual
+    assert "Use physical wall switches for lights until smart-home controls are restored." in manual
     assert "What not to touch:" in manual
     assert "No passwords or recovery keys are stored in this manual" in manual
     assert "could not detect recent breaking changes or failed generating or publishing a newer manual" in manual

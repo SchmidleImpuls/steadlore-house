@@ -8,6 +8,10 @@ probably_still_ok:
   - Physical wall switches may still control many lights.
   - This is usually inconvenient, not dangerous.
 household_impact: Some convenience automations and dashboards may be unavailable. Treat this as a smart-home problem first, not as a whole-house infrastructure failure.
+temporary_workarounds:
+  - Use physical wall switches for lights until smart-home controls are restored.
+  - Keep using normal internet and Wi-Fi if they are working.
+  - Do not change automations or smart-home settings while waiting for help.
 first_checks:
   - text: Try the physical wall switch for the affected light.
     action_class: safe
@@ -16,7 +20,7 @@ first_checks:
   - text: Try opening the Home Assistant dashboard link in this section.
     action_class: safe
 escalation_path:
-  - If physical switches work and only automations are unavailable, wait for the operator if that is realistic, or contact the trusted helper listed in this manual.
+  - If physical switches work and only automations are unavailable, wait for the operator if that is realistic. If the operator is unavailable, contact the trusted helper listed in this manual.
   - If internet or Wi-Fi also appear unavailable, use the separate internet or Wi-Fi runbook when one exists. Do not assume this smart-home symptom is the cause.
   - Secret references identify where access information is kept; this manual does not contain passwords or recovery keys.
 do_not_touch:

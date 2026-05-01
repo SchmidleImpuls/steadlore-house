@@ -1,6 +1,6 @@
 # Example Household Continuity Manual
 
-Generated: 2026-05-01T21:06:45.358128Z
+Generated: 2026-05-01T21:30:03.997776Z
 Audience: trusted people and operators
 
 > This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.
@@ -32,7 +32,7 @@ Useful links to try:
 Safe checks:
 - Try the physical wall switch for the affected light.
 - Check whether ordinary internet browsing works on a device already connected to the household Wi-Fi.
-- Try opening the Home Assistant dashboard link shown above.
+- Try opening the Home Assistant dashboard link in this section.
 
 What not to touch:
 - Do not reset the gateway, switches, or Wi-Fi access points while investigating this symptom.

@@ -63,6 +63,7 @@ If the vocabulary is wrong or incomplete, improve it here before spreading new t
 | Term | Meaning |
 |---|---|
 | Continuity Manual | The generated human-readable documentation explaining what the household depends on and how to respond when something breaks. |
+| AI Assistance Packet | A generated, redacted Markdown rendering of the same household knowledge, optimized for a chatbot helping a Stress User understand the Continuity Manual and perform safe checks only. |
 | Plain-English Summary | Guidance optimized for a stressed household member. |
 | Helper Note | More technical context for a Helper Person, without hiding safety constraints or uncertainty from the Stress User. |
 | Runbook | A structured recovery guide for a symptom a Stress User may notice. |
@@ -169,6 +170,7 @@ Use:
 - Trusted Person, not end user, family member, or customer when discussing safe access.
 - Stress User when designing for outage or emergency use.
 - Continuity Manual, not wiki, docs, binder, or knowledge base.
+- AI Assistance Packet for chatbot-oriented renderings of the same source data.
 - Fact, not data point, assertion, or claim unless discussing epistemology.
 - Evidence, not metadata when source and verification matter.
 - Secret Reference, not secret, credential, or password pointer.

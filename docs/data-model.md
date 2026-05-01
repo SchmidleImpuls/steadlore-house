@@ -72,6 +72,15 @@ Forbidden:
 
 Steadlore House models household infrastructure. External access paths that are not household infrastructure are not modeled as household dependencies.
 
+## Renderings
+
+The same source data can be rendered for different audiences:
+
+- Continuity Manual: for a Stress User first and a Helper Person second.
+- AI Assistance Packet: for a chatbot helping a Stress User understand the manual and perform safe checks only.
+
+The AI Assistance Packet must not contain more truth than the Continuity Manual. It adds explicit chatbot instructions, safety boundaries, evidence, unknowns, and escalation rules.
+
 ## Current implementation
 
 The first implementation reads YAML files and renders Markdown.
@@ -84,7 +93,8 @@ Implemented now:
 - schema validation with helpful errors
 - relationship validation between runbooks, services, and dependencies
 - staleness calculation
-- deterministic Markdown rendering
+- deterministic Continuity Manual rendering
+- deterministic AI Assistance Packet rendering
 
 Not implemented yet:
 

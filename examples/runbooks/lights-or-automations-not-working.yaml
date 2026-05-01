@@ -13,7 +13,7 @@ first_checks:
     action_class: safe
   - text: Check whether ordinary internet browsing works on a device already connected to the household Wi-Fi.
     action_class: safe
-  - text: Try opening the Home Assistant dashboard link shown above.
+  - text: Try opening the Home Assistant dashboard link in this section.
     action_class: safe
 escalation_path:
   - If physical switches work and only automations are unavailable, wait for the operator if that is realistic, or contact the trusted helper listed in this manual.

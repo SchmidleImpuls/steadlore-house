@@ -85,6 +85,11 @@ python -m steadlore_house.cli generate-manual \
   --inventory examples/household.yaml \
   --runbooks examples/runbooks \
   --output dist/continuity-manual.md
+
+python -m steadlore_house.cli generate-ai-packet \
+  --inventory examples/household.yaml \
+  --runbooks examples/runbooks \
+  --output dist/ai-assistance-packet.md
 ```
 
 The project is intentionally strict about language, safety, and scope.

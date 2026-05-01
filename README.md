@@ -17,7 +17,7 @@ Its purpose is simple: help a household understand what depends on what, what ma
 
 Steadlore House is not released yet.
 
-This repository currently contains the foundation for the project plus an initial Python prototype that reads example YAML and generates a Markdown Continuity Manual.
+This repository currently contains the foundation for the project plus an initial Python prototype that reads example YAML and generates a Markdown Continuity Manual and an AI Assistance Packet.
 
 There is no released Docker image, web interface, network scanner, Telegram bot, Home Assistant connector, Portainer connector, or automated recovery workflow yet.
 
@@ -57,7 +57,7 @@ The goal is to help a potentially stressed household member understand:
 - who should be contacted
 - where the relevant access information is stored
 
-The same manual should also give a contacted helper person enough technical context to help safely.
+The same source data can also produce an AI Assistance Packet for a chatbot helping the household member perform safe checks only, and helper-facing technical context for a contacted helper person.
 
 ## Design stance
 
@@ -77,7 +77,7 @@ Start with:
 - [`docs/ubiquitous-language.md`](docs/ubiquitous-language.md)
 - [`docs/data-model.md`](docs/data-model.md)
 
-Generate the example manual with:
+Generate the example outputs with:
 
 ```bash
 python -m pip install -e .[dev]

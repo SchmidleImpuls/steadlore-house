@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/SchmidleImpuls/brand-assets/main/Steadlore/logo/2026-logo-steadlore-light.svg">
-  <img src="https://raw.githubusercontent.com/SchmidleImpuls/brand-assets/main/Steadlore/logo/2026-logo-steadlore-dark.svg" alt="Steadlore" width="420">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/SchmidleImpuls/brand-assets/main/Steadlore/logo/2026-logo-steadlore-dark.svg">
+  <img src="https://raw.githubusercontent.com/SchmidleImpuls/brand-assets/main/Steadlore/logo/2026-logo-steadlore-light.svg" alt="Steadlore" width="420">
 </picture>
 
 # Steadlore House

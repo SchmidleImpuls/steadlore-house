@@ -65,10 +65,10 @@ Conversation interfaces, connectors, diagnostics, and supervised remediation may
 
 Start with:
 
-- `AGENTS.md`
-- `CONTRIBUTING.md`
-- `docs/vision.md`
-- `docs/ubiquitous-language.md`
+- [`AGENTS.md`](AGENTS.md)
+- [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- [`docs/vision.md`](docs/vision.md)
+- [`docs/ubiquitous-language.md`](docs/ubiquitous-language.md)
 
 The project is intentionally strict about language, safety, and scope.
 

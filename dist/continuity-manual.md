@@ -1,6 +1,6 @@
 # Example Household Continuity Manual
 
-Generated: 2026-05-01T21:03:30.411263Z
+Generated: 2026-05-01T21:06:45.358128Z
 Audience: trusted people and operators
 
 > This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.
@@ -44,10 +44,7 @@ Who to contact or what to do next:
 - If internet or Wi-Fi also appear unavailable, use the separate internet or Wi-Fi runbook when one exists. Do not assume this smart-home symptom is the cause.
 - Secret references identify where access information is kept; this manual does not contain passwords or recovery keys.
 
-For a helper person:
-- Home Assistant may not have returned correctly after container maintenance. Check container status and logs before any restart or rollback. A restart is not a first check for a stressed household member.
-
-## People
+## Who Can Help
 
 - **Primary Operator** (Operator) — Use normal family contact methods.
 - **Trusted Helper** (Trusted Person) — Contact if the primary operator is unavailable.
@@ -71,13 +68,25 @@ If unavailable: Some lights, automations, sensors, and dashboards may not work. 
 Open here:
 - Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 11 days ago)
 
+## For Helper Persons
+
+This section is for someone contacted by the stressed household member. It may use technical terms, but it still must not bypass safety guidance or expose secrets.
+
+### Symptom Notes
+
+- **Lights or automations are not working:** Home Assistant may not have returned correctly after container maintenance. Check container status and logs before any restart or rollback. A restart is not a first check for a stressed household member.
+
+### Service Evidence
+
+#### Home Assistant
+
 Facts:
 - Home Assistant is managed as a container named homeassistant. [current; source: manual inventory; status: manually_confirmed; confidence: medium; last verified: 2026-04-20T12:00:00Z; age: 11 days; freshness window: 14 days]
 - Home Assistant provides convenience automations, not the primary internet connection. [current; source: operator note; status: manually_confirmed; confidence: high; last verified: 2026-04-15T12:00:00Z; age: 16 days; freshness window: 90 days]
 
-## Technical Appendix: Devices
+### Devices
 
-### House Server 01
+#### House Server 01
 
 Type: Host
 Location: Utility cabinet shelf

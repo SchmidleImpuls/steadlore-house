@@ -21,12 +21,12 @@ def render_manual(inventory: Inventory, runbooks: list[Runbook], *, now: datetim
     lines.extend(_render_people(inventory))
     lines.extend(_render_secret_references(inventory))
     lines.extend(_render_services(inventory, current))
-    lines.extend(_render_devices(inventory, current))
+    lines.extend(_render_helper_section(runbooks, inventory, current))
     return "\n".join(lines).rstrip() + "\n"
 
 
 def _render_people(inventory: Inventory) -> list[str]:
-    lines = ["## People", ""]
+    lines = ["## Who Can Help", ""]
     for person in sorted(inventory.people, key=lambda item: item.name):
         suffix = f" — {person.contact_hint}" if person.contact_hint else ""
         lines.append(f"- **{person.name}** ({person.role}){suffix}")
@@ -60,15 +60,14 @@ def _render_services(inventory: Inventory, now: datetime) -> list[str]:
             lines.append("Open here:")
             for endpoint in sorted(service.access_endpoints, key=lambda item: item.label):
                 lines.append(f"- {endpoint.label}: `{endpoint.url}` {_render_evidence_plain(endpoint.evidence, now)}")
-        lines.extend(_render_facts(service.facts, now))
         lines.append("")
     return lines
 
 
 def _render_devices(inventory: Inventory, now: datetime) -> list[str]:
-    lines = ["## Technical Appendix: Devices", ""]
+    lines = ["### Devices", ""]
     for device in sorted(inventory.devices, key=lambda item: item.name):
-        lines.append(f"### {device.name}")
+        lines.append(f"#### {device.name}")
         lines.append("")
         lines.append(f"Type: {device.device_type}")
         lines.append(f"Location: {device.location}")
@@ -160,9 +159,34 @@ def _render_runbooks(runbooks: list[Runbook], inventory: Inventory, now: datetim
         lines.append("Who to contact or what to do next:")
         for item in runbook.escalation_path:
             lines.append(f"- {item}")
-        if runbook.helper_note:
-            lines.append("")
-            lines.append("For a helper person:")
-            lines.append(f"- {runbook.helper_note}")
+        lines.append("")
+    return lines
+
+
+def _render_helper_section(runbooks: list[Runbook], inventory: Inventory, now: datetime) -> list[str]:
+    lines = ["## For Helper Persons", ""]
+    lines.append("This section is for someone contacted by the stressed household member. It may use technical terms, but it still must not bypass safety guidance or expose secrets.")
+    lines.append("")
+
+    helper_notes = [runbook for runbook in sorted(runbooks, key=lambda item: item.symptom) if runbook.helper_note]
+    if helper_notes:
+        lines.append("### Symptom Notes")
+        lines.append("")
+        for runbook in helper_notes:
+            lines.append(f"- **{runbook.symptom}:** {runbook.helper_note}")
+        lines.append("")
+
+    lines.extend(_render_service_facts(inventory, now))
+    lines.extend(_render_devices(inventory, now))
+    return lines
+
+
+def _render_service_facts(inventory: Inventory, now: datetime) -> list[str]:
+    lines = ["### Service Evidence", ""]
+    for service in sorted(inventory.services, key=lambda item: item.name):
+        if not service.facts:
+            continue
+        lines.append(f"#### {service.name}")
+        lines.extend(_render_facts(service.facts, now))
         lines.append("")
     return lines

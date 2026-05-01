@@ -1,6 +1,6 @@
 # Example Household Continuity Manual
 
-Generated: 2026-05-01T20:54:50.566176Z
+Generated: 2026-05-01T21:03:30.411263Z
 Audience: trusted people and operators
 
 > This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.

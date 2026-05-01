@@ -5,6 +5,7 @@ from pathlib import Path
 
 from .io import load_inventory, load_runbooks
 from .render_manual import render_manual
+from .validation import validate_relationships
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -25,6 +26,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "generate-manual":
         inventory = load_inventory(args.inventory)
         runbooks = load_runbooks(args.runbooks)
+        validate_relationships(inventory, runbooks)
         manual = render_manual(inventory, runbooks)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(manual, encoding="utf-8")

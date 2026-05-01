@@ -81,6 +81,8 @@ Implemented now:
 - Manual Inventory parsing
 - Runbook parsing
 - raw secret-field rejection
+- schema validation with helpful errors
+- relationship validation between runbooks, services, and dependencies
 - staleness calculation
 - deterministic Markdown rendering
 

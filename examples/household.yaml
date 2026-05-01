@@ -1,0 +1,72 @@
+household_name: Example Household
+generated_for: trusted people and operators
+
+people:
+  - id: primary-operator
+    name: Primary Operator
+    role: Operator
+    contact_hint: Use normal family contact methods.
+  - id: helper
+    name: Trusted Helper
+    role: Trusted Person
+    contact_hint: Contact if the primary operator is unavailable.
+
+devices:
+  - id: house-server-01
+    name: House Server 01
+    device_type: Host
+    location: Utility cabinet shelf
+    household_impact: Runs household services. If unavailable, some local services may stop, but internet and Wi-Fi are not automatically affected. Do not unplug or reset this device unless a trusted technical helper asks you to.
+    facts:
+      - text: Home Assistant is expected to run on this host as a container.
+        evidence:
+          source: manual inventory
+          last_verified: "2026-01-15T10:00:00Z"
+          freshness_days: 30
+          status: manually_confirmed
+          confidence: high
+
+services:
+  - id: home-assistant
+    name: Home Assistant
+    critical: true
+    plain_description: Home Assistant is the household smart-home control system. It helps with lights, automations, sensors, and dashboards.
+    household_impact: Some lights, automations, sensors, and dashboards may not work. Internet and Wi-Fi are not necessarily affected.
+    depends_on:
+      - house-server-01
+    access_endpoints:
+      - label: Home Assistant dashboard
+        url: http://homeassistant.local:8123
+        evidence:
+          source: manual inventory
+          last_verified: "2026-04-20T12:00:00Z"
+          freshness_days: 30
+          status: manually_confirmed
+          confidence: medium
+    facts:
+      - text: Home Assistant is managed as a container named homeassistant.
+        evidence:
+          source: manual inventory
+          last_verified: "2026-04-20T12:00:00Z"
+          freshness_days: 14
+          status: manually_confirmed
+          confidence: medium
+      - text: Home Assistant provides convenience automations, not the primary internet connection.
+        evidence:
+          source: operator note
+          last_verified: "2026-04-15T12:00:00Z"
+          freshness_days: 90
+          status: manually_confirmed
+          confidence: high
+
+secret_references:
+  - label: Home Assistant admin access
+    system: 1Password
+    vault: Household Shared
+    item: Home Assistant
+    responsible_person: Primary Operator
+  - label: House server console access
+    system: 1Password
+    vault: Household Shared
+    item: House Server 01
+    responsible_person: Primary Operator

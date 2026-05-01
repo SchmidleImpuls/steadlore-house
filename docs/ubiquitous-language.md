@@ -22,8 +22,8 @@ If the vocabulary is wrong or incomplete, improve it here before spreading new t
 | Household | The people, spaces, routines, devices, services, procedures, and responsibilities Steadlore House helps preserve. |
 | Operator | The technical person who understands and maintains the household infrastructure. |
 | Trusted Person | Someone allowed to use Steadlore House for guidance. May be non-technical. |
-| Stress User | A trusted person using Steadlore House during an outage, absence, confusion, illness, travel, emergency, or after the operator’s death. |
-| Fallback Human | A person who can help when the operator is unavailable. |
+| Stress User | A trusted person using Steadlore House during an outage, absence, confusion, illness, travel, emergency, or after the operator’s death. The Stress User is the primary audience for the Continuity Manual. |
+| Helper Person | Someone contacted by a Stress User for help. May be technical or non-technical. The Helper Person is the secondary audience for the Continuity Manual. |
 | Contributor | A human or artificial participant improving the project. |
 
 ## Household infrastructure
@@ -63,10 +63,11 @@ If the vocabulary is wrong or incomplete, improve it here before spreading new t
 | Term | Meaning |
 |---|---|
 | Continuity Manual | The generated human-readable documentation explaining what the household depends on and how to respond when something breaks. |
-| Family Mode | Plain-English explanations optimized for non-technical trusted people. |
-| Operator Mode | Technical explanations for the operator or technically capable fallback humans. |
-| Runbook | A structured recovery guide for a known failure scenario. |
-| Failure Scenario | A recognizable situation requiring guidance, such as “Home Assistant is unavailable after redeploy.” |
+| Plain-English Summary | Guidance optimized for a stressed household member. |
+| Helper Note | More technical context for a Helper Person, without hiding safety constraints or uncertainty from the Stress User. |
+| Runbook | A structured recovery guide for a symptom a Stress User may notice. |
+| Symptom | A user-visible problem requiring guidance, such as “Lights or automations are not working.” |
+| Failure Scenario | A known technical situation that may explain a symptom. Use this term carefully; Runbook titles should prefer symptoms over possible root causes. |
 | Recovery Path | The recommended sequence from detection to explanation to safe checks to escalation. |
 | First Checks | Low-risk observations or checks that help understand a failure. |
 | Escalation Path | The point where the system tells the user who to contact or what privileged access is required. |
@@ -163,6 +164,8 @@ Conversation is not the source of truth.
 
 Use:
 
+- Stress User for the primary Continuity Manual reader under pressure.
+- Helper Person for someone contacted by the Stress User.
 - Trusted Person, not end user, family member, or customer when discussing safe access.
 - Stress User when designing for outage or emergency use.
 - Continuity Manual, not wiki, docs, binder, or knowledge base.

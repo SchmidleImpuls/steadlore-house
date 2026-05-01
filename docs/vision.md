@@ -74,18 +74,24 @@ The product should whisper:
 
 Steadlore House begins as a local-first continuity manual.
 
+The manual primarily serves a Stress User: a potentially stressed member of the household who notices that something is wrong and needs calm, safe guidance.
+
+The manual secondarily serves a Helper Person contacted by that Stress User. Helper-facing details may be more technical, but they must not obscure the Stress User path.
+
 The manual explains:
 
+- what symptom the household member may be seeing
+- what the symptom usually means in household terms
+- what is probably still okay
+- what is safe to check
+- what must not be touched
+- who can help
+- where secret references point
+- how old the information is
 - what exists
 - what matters
 - where things are
 - how things depend on each other
-- what breaks when something is offline
-- how old the information is
-- what is safe to do
-- what requires help
-- where secret references point
-- who can help
 
 The manual must be useful even when the agent, chat interface, live connectors, or network are unavailable.
 
@@ -93,7 +99,9 @@ The manual must be useful even when the agent, chat interface, live connectors, 
 
 The first scenario is:
 
-Home Assistant is unavailable after a container redeploy.
+Lights or automations are not working.
+
+A possible technical cause may be that Home Assistant is unavailable after maintenance, but the Stress User should not need to know that root cause to begin safely.
 
 This scenario is intentionally specific.
 
@@ -108,7 +116,7 @@ It forces the project to model:
 - stale information
 - safe checks
 - forbidden actions
-- escalation to a fallback human
+- escalation to a Helper Person
 
 If Steadlore House cannot handle one real scenario well, it has no business pretending to manage a household.
 

@@ -15,11 +15,11 @@ Its purpose is simple: help a household understand what depends on what, what ma
 
 ## Current status
 
-Steadlore House is not installable yet.
+Steadlore House is not released yet.
 
-This repository currently contains the foundation for the project: product intent, vocabulary, architecture principles, contribution rules, and early examples.
+This repository currently contains the foundation for the project plus an initial Python prototype that reads example YAML and generates a Markdown Continuity Manual.
 
-There is no released application, Docker image, network scanner, Telegram bot, Home Assistant connector, Portainer connector, or automated recovery workflow yet.
+There is no released Docker image, web interface, network scanner, Telegram bot, Home Assistant connector, Portainer connector, or automated recovery workflow yet.
 
 ## What Steadlore House is meant to become
 
@@ -44,19 +44,20 @@ Steadlore House should never store passwords, recovery keys, TOTP seeds, or emer
 
 The first useful version will focus on one concrete failure mode:
 
-**Home Assistant is unavailable after a container redeploy.**
+**Lights or automations are not working.**
 
 The goal is not to let an AI freely fix the problem.
 
-The goal is to help a trusted person understand:
+The goal is to help a potentially stressed household member understand:
 
-- what Home Assistant is
-- what household functions are affected
-- whether internet and Wi-Fi still work
+- what may be affected
+- what is probably still okay
 - what is safe to check
 - what must not be touched
 - who should be contacted
 - where the relevant access information is stored
+
+The same manual should also give a contacted helper person enough technical context to help safely.
 
 ## Design stance
 
@@ -74,6 +75,17 @@ Start with:
 - [`CONTRIBUTING.md`](CONTRIBUTING.md)
 - [`docs/vision.md`](docs/vision.md)
 - [`docs/ubiquitous-language.md`](docs/ubiquitous-language.md)
+- [`docs/data-model.md`](docs/data-model.md)
+
+Generate the example manual with:
+
+```bash
+python -m pip install -e .[dev]
+python -m steadlore_house.cli generate-manual \
+  --inventory examples/household.yaml \
+  --runbooks examples/runbooks \
+  --output dist/continuity-manual.md
+```
 
 The project is intentionally strict about language, safety, and scope.
 

@@ -1,6 +1,6 @@
 # Example Household AI Assistance Packet
 
-Generated: 2026-05-01T21:40:00.113469Z
+Generated: 2026-05-02T14:21:54.289946Z
 
 ## Instructions for the chatbot
 
@@ -23,6 +23,12 @@ Tell the household member: I can help you use the Steadlore House continuity inf
 Known symptoms in this packet: Lights or automations are not working.
 
 ## Safety policy
+
+Action classes:
+- safe: Read-only or low-risk observations a Stress User may perform without special approval.
+- privileged: Changes to services, containers, hosts, software, or configuration requiring explicit approval.
+- high_friction: Privileged changes to core infrastructure, identity, secrets, backups, or access that could cause lockout.
+- forbidden: Actions that expose secrets, delete critical data, or create unacceptable safety or lockout risk.
 
 Safe checks allowed:
 - Check whether ordinary internet browsing works on a device already connected to the household Wi-Fi.
@@ -49,7 +55,7 @@ Temporary workarounds to surface before escalation:
 - Keep using normal internet and Wi-Fi if they are working.
 - Do not change automations or smart-home settings while waiting for help.
 Useful endpoints:
-- Home Assistant dashboard: http://homeassistant.local:8123 [stale: false; source: manual inventory; status: manually_confirmed; confidence: medium; last_verified: 2026-04-20T12:00:00Z; age_days: 11; freshness_days: 30]
+- Home Assistant dashboard: http://homeassistant.local:8123 [stale: false; source: manual inventory; status: manually_confirmed; confidence: medium; last_verified: 2026-04-20T12:00:00Z; age_days: 12; freshness_days: 30]
 Escalate if safe checks do not resolve the situation or if privileged action seems necessary.
 Helper context: Home Assistant may not have returned correctly after container maintenance. Check container status and logs before any restart or rollback. A restart is not a first check for a stressed household member.
 
@@ -69,14 +75,14 @@ No secrets are included. These entries only describe where access information is
 ### Service: Home Assistant
 Description: Home Assistant is the household smart-home control system. It helps with lights, automations, sensors, and dashboards.
 Household impact if unavailable: Some lights, automations, sensors, and dashboards may not work. Internet and Wi-Fi are not necessarily affected.
-- Fact: Home Assistant is managed as a container named homeassistant. [stale: false; source: manual inventory; status: manually_confirmed; confidence: medium; last_verified: 2026-04-20T12:00:00Z; age_days: 11; freshness_days: 14]
-- Fact: Home Assistant provides convenience automations, not the primary internet connection. [stale: false; source: operator note; status: manually_confirmed; confidence: high; last_verified: 2026-04-15T12:00:00Z; age_days: 16; freshness_days: 90]
+- Fact: Home Assistant is managed as a container named homeassistant. [stale: false; source: manual inventory; status: manually_confirmed; confidence: medium; last_verified: 2026-04-20T12:00:00Z; age_days: 12; freshness_days: 14]
+- Fact: Home Assistant provides convenience automations, not the primary internet connection. [stale: false; source: operator note; status: manually_confirmed; confidence: high; last_verified: 2026-04-15T12:00:00Z; age_days: 17; freshness_days: 90]
 
 ### Device: House Server 01
 Type: Host
 Location: Utility cabinet shelf
 Household impact: Runs household services. If unavailable, some local services may stop, but internet and Wi-Fi are not automatically affected. Do not unplug or reset this device unless a trusted technical helper asks you to.
-- Fact: Home Assistant is expected to run on this host as a container. [stale: true; source: manual inventory; status: manually_confirmed; confidence: high; last_verified: 2026-01-15T10:00:00Z; age_days: 106; freshness_days: 30]
+- Fact: Home Assistant is expected to run on this host as a container. [stale: true; source: manual inventory; status: manually_confirmed; confidence: high; last_verified: 2026-01-15T10:00:00Z; age_days: 107; freshness_days: 30]
 
 ## Unknowns the chatbot must not invent
 

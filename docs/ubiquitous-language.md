@@ -95,6 +95,7 @@ If the vocabulary is wrong or incomplete, improve it here before spreading new t
 | Term | Meaning |
 |---|---|
 | Connector | A read-only integration that imports facts from a source system. |
+| Discovery Snapshot | A timestamped observational output from local discovery. It is not trusted Manual Inventory until reviewed. |
 | Manual Inventory | Human-authored structured inventory, usually stored in YAML or another readable format. |
 | Generated Manual | Markdown or other output produced from inventory, evidence, and runbooks. |
 | Renderer | Code that turns structured data into human-readable output. |

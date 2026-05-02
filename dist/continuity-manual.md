@@ -1,6 +1,6 @@
 # Example Household Continuity Manual
 
-Generated: 2026-05-01T21:39:59.772870Z
+Generated: 2026-05-02T14:21:53.860265Z
 Audience: trusted people and operators
 
 > This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.
@@ -11,6 +11,15 @@ If something is not working, choose the closest symptom below. Do the safe check
 
 Common symptoms:
 - Lights or automations are not working
+
+## Safety Rules
+
+Steadlore House uses deterministic policy rules for guidance. Safe checks are allowed for stressed household members; anything riskier requires escalation.
+
+- **Safe:** Read-only or low-risk observations a Stress User may perform without special approval.
+- **Privileged:** Changes to services, containers, hosts, software, or configuration requiring explicit approval.
+- **High Friction:** Privileged changes to core infrastructure, identity, secrets, backups, or access that could cause lockout.
+- **Forbidden:** Actions that expose secrets, delete critical data, or create unacceptable safety or lockout risk.
 
 ## Common Problems
 
@@ -32,7 +41,7 @@ What you can do meanwhile:
 - Do not change automations or smart-home settings while waiting for help.
 
 Useful links to try:
-- Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 11 days ago)
+- Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 12 days ago)
 
 Safe checks:
 - Try the physical wall switch for the affected light.
@@ -71,7 +80,7 @@ Importance: High
 If unavailable: Some lights, automations, sensors, and dashboards may not work. Internet and Wi-Fi are not necessarily affected.
 
 Open here:
-- Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 11 days ago)
+- Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 12 days ago)
 
 ## For Helper Persons
 
@@ -86,8 +95,8 @@ This section is for someone contacted by the stressed household member. It may u
 #### Home Assistant
 
 Facts:
-- Home Assistant is managed as a container named homeassistant. [current; source: manual inventory; status: manually_confirmed; confidence: medium; last verified: 2026-04-20T12:00:00Z; age: 11 days; freshness window: 14 days]
-- Home Assistant provides convenience automations, not the primary internet connection. [current; source: operator note; status: manually_confirmed; confidence: high; last verified: 2026-04-15T12:00:00Z; age: 16 days; freshness window: 90 days]
+- Home Assistant is managed as a container named homeassistant. [current; source: manual inventory; status: manually_confirmed; confidence: medium; last verified: 2026-04-20T12:00:00Z; age: 12 days; freshness window: 14 days]
+- Home Assistant provides convenience automations, not the primary internet connection. [current; source: operator note; status: manually_confirmed; confidence: high; last verified: 2026-04-15T12:00:00Z; age: 17 days; freshness window: 90 days]
 
 ### Devices
 
@@ -98,4 +107,4 @@ Location: Utility cabinet shelf
 Household Impact: Runs household services. If unavailable, some local services may stop, but internet and Wi-Fi are not automatically affected. Do not unplug or reset this device unless a trusted technical helper asks you to.
 
 Facts:
-- Home Assistant is expected to run on this host as a container. [STALE; source: manual inventory; status: manually_confirmed; confidence: high; last verified: 2026-01-15T10:00:00Z; age: 106 days; freshness window: 30 days]
+- Home Assistant is expected to run on this host as a container. [STALE; source: manual inventory; status: manually_confirmed; confidence: high; last verified: 2026-01-15T10:00:00Z; age: 107 days; freshness window: 30 days]

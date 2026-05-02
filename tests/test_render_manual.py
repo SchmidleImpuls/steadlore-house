@@ -14,6 +14,8 @@ def test_render_manual_includes_staleness_and_modes() -> None:
     assert "# Example Household Continuity Manual" in manual
     assert "STALE" in manual
     assert "## Start Here" in manual
+    assert "## Safety Rules" in manual
+    assert "High Friction" in manual
     assert "## Common Problems" in manual
     assert "### Lights or automations are not working" in manual
     assert "## Who Can Help" in manual

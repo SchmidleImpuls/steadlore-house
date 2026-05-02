@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 from .models import Evidence, Fact, Inventory, Runbook
+from .policy import POLICY_DEFINITIONS
 from .staleness import age_in_days, is_stale
 
 
@@ -17,6 +18,7 @@ def render_manual(inventory: Inventory, runbooks: list[Runbook], *, now: datetim
     lines.append("> This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.")
     lines.append("")
     lines.extend(_render_start_here(runbooks))
+    lines.extend(_render_safety_rules())
     lines.extend(_render_runbooks(runbooks, inventory, current))
     lines.extend(_render_people(inventory))
     lines.extend(_render_secret_references(inventory))
@@ -41,6 +43,17 @@ def _render_start_here(runbooks: list[Runbook]) -> list[str]:
     lines.append("Common symptoms:")
     for runbook in sorted(runbooks, key=lambda item: item.symptom):
         lines.append(f"- {runbook.symptom}")
+    lines.append("")
+    return lines
+
+
+def _render_safety_rules() -> list[str]:
+    lines = ["## Safety Rules", ""]
+    lines.append("Steadlore House uses deterministic policy rules for guidance. Safe checks are allowed for stressed household members; anything riskier requires escalation.")
+    lines.append("")
+    for action_class, description in POLICY_DEFINITIONS:
+        label = action_class.replace("_", " ").title()
+        lines.append(f"- **{label}:** {description}")
     lines.append("")
     return lines
 

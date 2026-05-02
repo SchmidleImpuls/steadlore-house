@@ -20,6 +20,8 @@ def test_render_ai_packet_includes_chatbot_boundaries() -> None:
     assert "Do not invent missing facts" in packet
     assert "Do not ask for passwords" in packet
     assert "## Safety policy" in packet
+    assert "high_friction: Privileged changes to core infrastructure" in packet
+    assert "forbidden: Actions that expose secrets" in packet
     assert "## Symptom runbooks" in packet
     assert "### Symptom: Lights or automations are not working" in packet
     assert "http://homeassistant.local:8123" in packet

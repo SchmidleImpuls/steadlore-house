@@ -4,6 +4,7 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 from urllib.parse import urlparse
 
+from .policy import classify_action, is_stricter_or_equal
 from .staleness import parse_utc
 
 SECRET_FIELD_NAMES = {
@@ -34,18 +35,6 @@ ROOT_CAUSE_TITLE_TERMS = {
     "after upgrade",
     "unavailable after",
 }
-PRIVILEGED_FIRST_CHECK_TERMS = {
-    "restart",
-    "reboot",
-    "reset",
-    "delete",
-    "remove",
-    "change firewall",
-    "change dns",
-    "change vlan",
-    "update software",
-}
-
 
 class ValidationError(ValueError):
     """Raised when input data is unsafe or invalid."""
@@ -141,11 +130,23 @@ def validate_runbook_data(data: Mapping[str, Any], *, path: str) -> None:
             continue
         _require(check, ["text", "action_class"], item_path, errors)
         action_class = check.get("action_class")
+        text = str(check.get("text", ""))
+        decision = classify_action(text)
         if action_class not in VALID_ACTION_CLASSES:
             errors.append(f"{item_path}.action_class must be one of {sorted(VALID_ACTION_CLASSES)}")
-        if action_class != "safe":
-            errors.append(f"{item_path} must be a Safe Action because first checks are for Stress Users")
-        _validate_first_check_text(str(check.get("text", "")), f"{item_path}.text", errors)
+        else:
+            if not is_stricter_or_equal(action_class, decision.action_class):
+                errors.append(
+                    f"{item_path}.action_class {action_class!r} is less strict than policy classification "
+                    f"{decision.action_class!r} for term {decision.matched_term!r}"
+                )
+            if action_class != "safe":
+                errors.append(f"{item_path} must be a Safe Action because first checks are for Stress Users")
+        if decision.action_class != "safe":
+            errors.append(
+                f"{item_path}.text is classified as {decision.action_class!r}; "
+                "first checks must be safe observations"
+            )
 
     _raise_if_errors(errors)
 
@@ -222,14 +223,6 @@ def _validate_symptom_title(value: str, path: str, errors: list[str]) -> None:
             errors.append(
                 f"{path} should describe a Stress User symptom, not a possible root cause; avoid {term!r}"
             )
-            return
-
-
-def _validate_first_check_text(value: str, path: str, errors: list[str]) -> None:
-    lowered = value.lower()
-    for term in sorted(PRIVILEGED_FIRST_CHECK_TERMS):
-        if term in lowered:
-            errors.append(f"{path} appears to describe a privileged action; first checks must be safe observations")
             return
 
 

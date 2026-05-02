@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 from .models import Evidence, Inventory, Runbook
+from .policy import POLICY_DEFINITIONS
 from .staleness import age_in_days, is_stale
 
 
@@ -58,6 +59,10 @@ def _render_suggested_first_response(runbooks: list[Runbook]) -> list[str]:
 
 def _render_safety_policy(runbooks: list[Runbook]) -> list[str]:
     lines = ["## Safety policy", ""]
+    lines.append("Action classes:")
+    for action_class, description in POLICY_DEFINITIONS:
+        lines.append(f"- {action_class}: {description}")
+    lines.append("")
     lines.append("Safe checks allowed:")
     for check in sorted({check.text for runbook in runbooks for check in runbook.first_checks}):
         lines.append(f"- {check}")

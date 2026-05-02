@@ -17,9 +17,9 @@ Its purpose is simple: help a household understand what depends on what, what ma
 
 Steadlore House is not released yet.
 
-This repository currently contains the foundation for the project plus an initial Python prototype that reads example YAML and generates a Markdown Continuity Manual and an AI Assistance Packet.
+This repository currently contains the foundation for the project plus an initial Python prototype that can generate a passive local Network Discovery Snapshot, read example YAML, and generate a Markdown Continuity Manual and an AI Assistance Packet.
 
-There is no released Docker image, web interface, network scanner, Telegram bot, Home Assistant connector, Portainer connector, or automated recovery workflow yet.
+There is no released Docker image, web interface, Telegram bot, Home Assistant connector, Portainer connector, or automated recovery workflow yet. Network discovery is limited to a local snapshot and optional explicit `nmap` ping scan.
 
 ## What Steadlore House is meant to become
 
@@ -77,10 +77,42 @@ Start with:
 - [`docs/ubiquitous-language.md`](docs/ubiquitous-language.md)
 - [`docs/data-model.md`](docs/data-model.md)
 
-Generate the example outputs with:
+Generate a local network snapshot with:
 
 ```bash
 python -m pip install -e .[dev]
+python -m steadlore_house.cli discover-network \
+  --output dist/network-snapshot.md
+```
+
+Steadlore automatically tries to enrich MAC addresses from a local `nmap-mac-prefixes` file when one is installed. You can override this with a local `nmap-mac-prefixes` or IEEE OUI file:
+
+```bash
+python -m steadlore_house.cli discover-network \
+  --mac-vendors path/to/nmap-mac-prefixes \
+  --output dist/network-snapshot.md
+```
+
+This reads local OS network state only. To opt into an active ping scan with an existing `nmap` installation, either let Steadlore use locally discovered IPv4 subnets:
+
+```bash
+python -m steadlore_house.cli discover-network \
+  --active-scan \
+  --output dist/network-snapshot.md
+```
+
+or provide one or more explicit scan targets:
+
+```bash
+python -m steadlore_house.cli discover-network \
+  --active-scan \
+  --subnet 192.0.2.0/24 \
+  --output dist/network-snapshot.md
+```
+
+Generate the example manual outputs with:
+
+```bash
 python -m steadlore_house.cli generate-manual \
   --inventory examples/household.yaml \
   --runbooks examples/runbooks \

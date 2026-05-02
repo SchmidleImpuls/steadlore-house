@@ -6,7 +6,25 @@ The model is intentionally small. It exists to generate a deterministic Continui
 
 The Continuity Manual primarily serves a Stress User: a potentially stressed household member who notices a symptom and needs calm, safe guidance. It secondarily serves a Helper Person contacted by that Stress User.
 
-## Inputs
+## Inputs and discovery outputs
+
+### Discovery Snapshot
+
+A Discovery Snapshot is a timestamped observational output from local discovery. It helps an operator start mapping core infrastructure, but it is not trusted Manual Inventory until reviewed.
+
+The initial Network Discovery Snapshot may include:
+
+- local interfaces and addresses
+- default routes and gateways
+- DNS servers from local resolver configuration
+- neighbor entries from the local ARP/neighbor cache
+- optional active ping-scan hosts when explicitly requested with `nmap`; scan targets can be explicit or derived from local IPv4 interface subnets
+- optional offline MAC vendor enrichment from an automatically discovered local `nmap-mac-prefixes` file or an explicit local OUI file
+- core infrastructure candidates derived from routes, DNS servers, vendor enrichment, and optional active scan results
+- possible connector candidates based on vendor hints
+- evidence sources and warnings
+
+Discovery Snapshots must not infer household meaning. For example, a default gateway may be labeled as an observed gateway, and a MAC vendor may suggest a possible connector, but role, owner, location, and Household Impact require Manual Inventory confirmation.
 
 ### Manual Inventory
 
@@ -37,7 +55,20 @@ A Runbook includes:
 - Do-Not-Touch List
 - optional technical note for a Helper Person
 
-First Checks are classified with Policy language such as Safe Action, Privileged Action, High-Friction Action, or Forbidden Action.
+First Checks are classified with Policy language such as Safe Action, Privileged Action, High-Friction Action, or Forbidden Action. In v0, First Checks must be Safe Actions.
+
+### Policy
+
+Policy is a deterministic safety layer used by validators and renderers.
+
+Initial action classes:
+
+- `safe`: read-only or low-risk observations a Stress User may perform without special approval.
+- `privileged`: changes to services, containers, hosts, software, or configuration requiring explicit approval.
+- `high_friction`: privileged changes to core infrastructure, identity, secrets, backups, or access that could cause Lockout.
+- `forbidden`: actions that expose Secrets, delete critical data, or create unacceptable safety or Lockout risk.
+
+Runbook authors declare an action class for each guided action. Validation also classifies the action text with conservative deterministic rules. A declared class must be at least as strict as the inferred policy classification, and First Checks are rejected unless both the declared and inferred class are Safe Action.
 
 ## Evidence and staleness
 
@@ -88,6 +119,8 @@ The first implementation reads YAML files and renders Markdown.
 
 Implemented now:
 
+- passive local Network Discovery Snapshot rendering
+- optional explicit `nmap` ping-scan snapshot rendering
 - Manual Inventory parsing
 - Runbook parsing
 - raw secret-field rejection
@@ -96,6 +129,7 @@ Implemented now:
 - staleness calculation
 - deterministic Continuity Manual rendering
 - deterministic AI Assistance Packet rendering
+- deterministic v0 policy classification for action guidance
 
 Not implemented yet:
 
@@ -103,5 +137,5 @@ Not implemented yet:
 - connectors
 - publication destinations
 - PDF rendering
-- policy enforcement beyond rendered action classification
+- complete policy model for supervised remediation
 - autonomous remediation

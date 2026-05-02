@@ -59,6 +59,22 @@ def test_first_checks_must_be_safe() -> None:
         validate_runbook_data(data, path="runbook")
 
 
+def test_first_check_declared_safe_cannot_hide_privileged_policy_text() -> None:
+    data = _valid_runbook_data()
+    data["first_checks"] = [{"text": "Restart the Home Assistant container.", "action_class": "safe"}]
+
+    with pytest.raises(ValidationError, match="less strict than policy classification"):
+        validate_runbook_data(data, path="runbook")
+
+
+def test_first_check_rejects_secret_requests() -> None:
+    data = _valid_runbook_data()
+    data["first_checks"] = [{"text": "Ask the user for the Home Assistant password.", "action_class": "safe"}]
+
+    with pytest.raises(ValidationError, match="classified as 'forbidden'"):
+        validate_runbook_data(data, path="runbook")
+
+
 def test_runbooks_must_reference_existing_services() -> None:
     inventory = Inventory.from_dict(
         {

@@ -41,3 +41,18 @@ def test_discover_network_prints_minimal_feedback(monkeypatch: pytest.MonkeyPatc
     assert "Discovering network (passive local snapshot)" in output
     assert "Wrote Network Discovery Snapshot" in output
     assert (tmp_path / "network-snapshot.md").is_file()
+
+
+def test_discover_network_can_write_inventory_draft(monkeypatch: pytest.MonkeyPatch, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
+    snapshot = NetworkSnapshot(
+        observed_at=datetime(2026, 5, 1, tzinfo=UTC),
+        method="passive local OS snapshot",
+    )
+    monkeypatch.setattr(cli, "discover_network", lambda **kwargs: snapshot)
+
+    result = cli.main(["discover-network", "--output", str(tmp_path / "snapshot.md"), "--inventory-draft", str(tmp_path)])
+
+    assert result == 0
+    output = capsys.readouterr().out
+    assert "Wrote review-required Manual Inventory draft" in output
+    assert (tmp_path / "inventory-draft.yaml").is_file()

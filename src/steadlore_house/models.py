@@ -76,6 +76,7 @@ class Device:
     device_type: str
     location: str
     household_impact: str
+    core: bool = False
     facts: list[Fact] = field(default_factory=list)
 
     @classmethod
@@ -86,6 +87,7 @@ class Device:
             device_type=data["device_type"],
             location=data["location"],
             household_impact=data["household_impact"],
+            core=bool(data.get("core", False)),
             facts=[Fact.from_dict(item) for item in data.get("facts", [])],
         )
 

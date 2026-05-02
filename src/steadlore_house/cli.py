@@ -8,6 +8,7 @@ from .io import load_inventory, load_runbooks
 from .network_discovery import NetworkDiscoveryError, discover_network
 from .render_ai_packet import render_ai_packet
 from .render_manual import render_manual
+from .render_inventory_draft import render_inventory_draft
 from .render_network_snapshot import render_network_snapshot
 from .validation import validate_relationships
 
@@ -81,6 +82,7 @@ MAC vendor enrichment:
 
 Examples:
   steadlore-house discover-network --output dist/network-snapshot.md
+  steadlore-house discover-network --output dist/network-snapshot.md --inventory-draft dist/inventory-draft.yaml
   steadlore-house discover-network --active-scan --output dist/network-snapshot.md
   steadlore-house discover-network --active-scan --subnet 192.0.2.0/24 --output dist/network-snapshot.md
 """,
@@ -89,6 +91,7 @@ Examples:
     discover.add_argument("--active-scan", action="store_true", help="Also run an explicit nmap ping scan. Requires nmap on PATH.")
     discover.add_argument("--subnet", action="append", default=[], help="Subnet to scan when --active-scan is used, such as 192.0.2.0/24. Can be repeated. If omitted, local IPv4 subnets are discovered from interfaces.")
     discover.add_argument("--mac-vendors", type=Path, help="Optional local nmap-mac-prefixes or IEEE OUI file for offline MAC vendor enrichment. Overrides automatic local nmap-mac-prefixes discovery.")
+    discover.add_argument("--inventory-draft", type=Path, help="Optional path for a review-required Manual Inventory draft YAML. If this is an existing directory, inventory-draft.yaml is written inside it.")
     return parser
 
 
@@ -128,8 +131,12 @@ def main(argv: list[str] | None = None) -> int:
         except NetworkDiscoveryError as error:
             parser.error(str(error))
         rendered = render_network_snapshot(snapshot)
-        output_path = _write_markdown(args.output, rendered, default_filename="network-snapshot.md", parser=parser)
+        output_path = _write_text(args.output, rendered, default_filename="network-snapshot.md", parser=parser)
         _print_status(f"Wrote Network Discovery Snapshot to {output_path}")
+        if args.inventory_draft:
+            draft = render_inventory_draft(snapshot)
+            draft_path = _write_text(args.inventory_draft, draft, default_filename="inventory-draft.yaml", parser=parser)
+            _print_status(f"Wrote review-required Manual Inventory draft to {draft_path}")
         return 0
 
     parser.error(f"Unknown command: {args.command}")
@@ -146,7 +153,7 @@ def _resolve_output_path(path: Path, *, default_filename: str) -> Path:
     return path
 
 
-def _write_markdown(path: Path, content: str, *, default_filename: str, parser: argparse.ArgumentParser) -> Path:
+def _write_text(path: Path, content: str, *, default_filename: str, parser: argparse.ArgumentParser) -> Path:
     output_path = _resolve_output_path(path, default_filename=default_filename)
     try:
         output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -154,6 +161,9 @@ def _write_markdown(path: Path, content: str, *, default_filename: str, parser: 
     except OSError as error:
         parser.error(f"could not write output to {output_path}: {error}")
     return output_path
+
+
+_write_markdown = _write_text
 
 
 if __name__ == "__main__":

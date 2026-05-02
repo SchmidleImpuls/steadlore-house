@@ -1,6 +1,6 @@
 # Example Household Continuity Manual
 
-Generated: 2026-05-02T14:21:53.860265Z
+Generated: 2026-05-02T18:21:26.849695Z
 Audience: trusted people and operators
 
 > This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.
@@ -103,6 +103,7 @@ Facts:
 #### House Server 01
 
 Type: Host
+Core infrastructure: No
 Location: Utility cabinet shelf
 Household Impact: Runs household services. If unavailable, some local services may stop, but internet and Wi-Fi are not automatically affected. Do not unplug or reset this device unless a trusted technical helper asks you to.
 

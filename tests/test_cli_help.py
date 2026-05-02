@@ -11,6 +11,7 @@ from steadlore_house.cli import main
         (["generate-ai-packet", "--help"], "must not authorize privileged actions"),
         (["discover-network", "--help"], "Does not perform port scans"),
         (["discover-network", "--help"], "offline MAC vendor enrichment"),
+        (["discover-network", "--help"], "review-required Manual Inventory"),
     ],
 )
 def test_cli_help_documents_commands(argv: list[str], expected: str, capsys: pytest.CaptureFixture[str]) -> None:

@@ -145,6 +145,7 @@ def _render_facts(inventory: Inventory, now: datetime) -> list[str]:
     for device in sorted(inventory.devices, key=lambda item: item.name):
         lines.append(f"### Device: {device.name}")
         lines.append(f"Type: {device.device_type}")
+        lines.append(f"Core infrastructure: {'true' if device.core else 'false'}")
         lines.append(f"Location: {device.location}")
         lines.append(f"Household impact: {device.household_impact}")
         for fact in sorted(device.facts, key=lambda item: item.text):

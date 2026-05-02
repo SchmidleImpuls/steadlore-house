@@ -28,6 +28,7 @@ def test_render_ai_packet_includes_chatbot_boundaries() -> None:
     assert "Temporary workarounds to surface before escalation:" in packet
     assert "Use physical wall switches for lights until smart-home controls are restored." in packet
     assert "[stale: true;" in packet
+    assert "Core infrastructure: false" in packet
     assert "## Unknowns the chatbot must not invent" in packet
     assert "container redeploy" not in packet
 

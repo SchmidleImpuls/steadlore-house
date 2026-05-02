@@ -26,6 +26,24 @@ The initial Network Discovery Snapshot may include:
 
 Discovery Snapshots must not infer household meaning. For example, a default gateway may be labeled as an observed gateway, and a MAC vendor may suggest a possible connector, but role, owner, location, and Household Impact require Manual Inventory confirmation.
 
+### Manual Inventory Draft
+
+A Manual Inventory Draft is generated from curated Discovery Snapshot candidates to reduce blank-page work for the operator.
+
+A draft:
+
+- is review-required
+- may include candidate Devices only
+- stores structured `_review` metadata for candidate IP address, vendor, reasons, connector hints, and fields to review
+- may deterministically suggest `device_type`, `core`, and conservative Household Impact for default gateway and DNS candidates
+- uses `Unknown` for role-like fields that discovery cannot know, such as Location
+- marks discovered Facts with low confidence
+- must not claim confirmed Household Impact
+- must not include Secrets
+- must not overwrite reviewed Manual Inventory
+
+The operator reviews and edits the draft before treating it as Manual Inventory.
+
 ### Manual Inventory
 
 The Manual Inventory describes household infrastructure and meaning that cannot be safely inferred from raw discovery alone.
@@ -33,7 +51,7 @@ The Manual Inventory describes household infrastructure and meaning that cannot 
 Initial entities:
 
 - `Person`: an Operator, Trusted Person, Stress User, or Helper Person.
-- `Device`: a physical object such as a host, gateway, switch, or access point.
+- `Device`: a physical object such as a host, gateway, switch, or access point. Devices may be marked `core` when they are believed to be Core Infrastructure.
 - `Service`: a household capability such as Home Assistant, Wi-Fi, or internet access.
 - `SecretReference`: a pointer to where access information is stored, without containing the secret.
 - `Fact`: a meaningful claim used by the manual.
@@ -120,6 +138,7 @@ The first implementation reads YAML files and renders Markdown.
 Implemented now:
 
 - passive local Network Discovery Snapshot rendering
+- review-required Manual Inventory Draft generation from Network Discovery Snapshot candidates
 - optional explicit `nmap` ping-scan snapshot rendering
 - Manual Inventory parsing
 - Runbook parsing

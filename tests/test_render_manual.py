@@ -20,6 +20,7 @@ def test_render_manual_includes_staleness_and_modes() -> None:
     assert "### Lights or automations are not working" in manual
     assert "## Who Can Help" in manual
     assert "## For Helper Persons" in manual
+    assert "Core infrastructure: No" in manual
     assert "### Symptom Notes" in manual
     assert "What you can do meanwhile:" in manual
     assert "Use physical wall switches for lights until smart-home controls are restored." in manual

@@ -33,6 +33,7 @@ If the vocabulary is wrong or incomplete, improve it here before spreading new t
 | Device | A physical object, such as a gateway, switch, mini-PC, DGX Spark, NVR, access point, camera, modem, or server. |
 | Service | A useful household capability provided by one or more devices, such as Wi-Fi, internet access, Home Assistant, camera recording, Plex, or local AI inference. |
 | Critical Service | A service whose outage creates meaningful household pain, risk, confusion, or loss of safety. |
+| Core Infrastructure | Devices or services whose changes or outages may affect broad household connectivity, identity, secrets, backups, access, or lockout risk. Examples include gateways, DNS, switches, Wi-Fi access points, VLANs, and firewall rules. |
 | Location | A physical place, such as utility cabinet, studio, master bedroom, rack, shelf, or room. |
 | Port | A physical or logical connection point, such as a switch port or exposed service port. Use precise qualifiers when ambiguity matters. |
 | Host | A device that runs software services. |
@@ -96,6 +97,7 @@ If the vocabulary is wrong or incomplete, improve it here before spreading new t
 |---|---|
 | Connector | A read-only integration that imports facts from a source system. |
 | Discovery Snapshot | A timestamped observational output from local discovery. It is not trusted Manual Inventory until reviewed. |
+| Manual Inventory Draft | A review-required draft generated from Discovery Snapshot candidates to reduce blank-page work. It is not trusted Manual Inventory until edited and confirmed. |
 | Manual Inventory | Human-authored structured inventory, usually stored in YAML or another readable format. |
 | Generated Manual | Markdown or other output produced from inventory, evidence, and runbooks. |
 | Renderer | Code that turns structured data into human-readable output. |

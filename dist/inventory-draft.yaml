@@ -1,0 +1,91 @@
+_draft_notice: Draft only. Review before using as Manual Inventory. Discovery candidates do not confirm role, location, owner, or Household Impact.
+household_name: Draft Household
+generated_for: trusted people and operators
+people: []
+devices:
+- id: candidate-device-192-0-2-1
+  name: Gateway candidate 192.0.2.1
+  device_type: Gateway
+  core: true
+  location: Unknown
+  household_impact: Likely core network infrastructure. If unavailable, internet access and local routing may be affected. Review required.
+  _review:
+    candidate: true
+    promotion_required: true
+    ip_address: 192.0.2.1
+    reasons:
+    - default gateway candidate
+    - vendor-enriched observed neighbor
+    suggested_device_type: Gateway
+    suggested_core: true
+    fields_to_review:
+    - id
+    - name
+    - device_type
+    - core
+    - location
+    - household_impact
+    mac_address: 00:00:5E:00:53:01
+    vendor: Example Networks
+    connector_hints:
+    - example connector candidate
+  facts:
+  - text: Observed 192.0.2.1 as default gateway candidate, vendor-enriched observed neighbor.
+    evidence:
+      source: network discovery snapshot
+      last_verified: '2026-05-01T00:00:00Z'
+      freshness_days: 7
+      status: discovered
+      confidence: low
+  - text: Observed MAC address 00:00:5E:00:53:01 for 192.0.2.1.
+    evidence:
+      source: network discovery snapshot
+      last_verified: '2026-05-01T00:00:00Z'
+      freshness_days: 7
+      status: discovered
+      confidence: low
+  - text: Offline MAC vendor lookup suggests Example Networks for 192.0.2.1.
+    evidence:
+      source: 'MAC vendor enrichment: example-vendors.txt'
+      last_verified: '2026-05-01T00:00:00Z'
+      freshness_days: 7
+      status: discovered
+      confidence: low
+  - text: 'Possible connector candidate for 192.0.2.1: example connector candidate.'
+    evidence:
+      source: offline MAC vendor hint
+      last_verified: '2026-05-01T00:00:00Z'
+      freshness_days: 7
+      status: discovered
+      confidence: low
+- id: candidate-device-192-0-2-53
+  name: DNS server candidate 192.0.2.53
+  device_type: Network Device
+  core: true
+  location: Unknown
+  household_impact: Likely core network infrastructure. If unavailable, local name resolution may be affected. Review required.
+  _review:
+    candidate: true
+    promotion_required: true
+    ip_address: 192.0.2.53
+    reasons:
+    - DNS server candidate
+    suggested_device_type: Network Device
+    suggested_core: true
+    fields_to_review:
+    - id
+    - name
+    - device_type
+    - core
+    - location
+    - household_impact
+  facts:
+  - text: Observed 192.0.2.53 as DNS server candidate.
+    evidence:
+      source: network discovery snapshot
+      last_verified: '2026-05-01T00:00:00Z'
+      freshness_days: 7
+      status: discovered
+      confidence: low
+services: []
+secret_references: []

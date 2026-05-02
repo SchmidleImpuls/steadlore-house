@@ -83,6 +83,7 @@ def _render_devices(inventory: Inventory, now: datetime) -> list[str]:
         lines.append(f"#### {device.name}")
         lines.append("")
         lines.append(f"Type: {device.device_type}")
+        lines.append(f"Core infrastructure: {'Yes' if device.core else 'No'}")
         lines.append(f"Location: {device.location}")
         lines.append(f"Household Impact: {device.household_impact}")
         lines.extend(_render_facts(device.facts, now))

@@ -1,6 +1,6 @@
 # Example Household AI Assistance Packet
 
-Generated: 2026-05-02T14:21:54.289946Z
+Generated: 2026-05-02T18:21:27.285295Z
 
 ## Instructions for the chatbot
 
@@ -80,6 +80,7 @@ Household impact if unavailable: Some lights, automations, sensors, and dashboar
 
 ### Device: House Server 01
 Type: Host
+Core infrastructure: false
 Location: Utility cabinet shelf
 Household impact: Runs household services. If unavailable, some local services may stop, but internet and Wi-Fi are not automatically affected. Do not unplug or reset this device unless a trusted technical helper asks you to.
 - Fact: Home Assistant is expected to run on this host as a container. [stale: true; source: manual inventory; status: manually_confirmed; confidence: high; last_verified: 2026-01-15T10:00:00Z; age_days: 107; freshness_days: 30]

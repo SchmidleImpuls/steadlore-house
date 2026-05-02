@@ -14,6 +14,7 @@ Steadlore House v0 reads local OS network state, reads local Manual Inventory an
 - False confidence from stale or unknown facts.
 - False confidence from treating observed network hosts as confirmed household inventory.
 - False confidence from treating MAC vendor names as confirmed device roles.
+- False confidence from treating generated Manual Inventory Drafts as reviewed Manual Inventory.
 - A future Conversation Interface inventing missing facts or escalating from guidance into action.
 
 ## v0 mitigations
@@ -22,6 +23,7 @@ Steadlore House v0 reads local OS network state, reads local Manual Inventory an
 - Secret References may point to where access information is stored but must not include the Secret itself.
 - Network Discovery Snapshots are labeled as observational and not trusted Manual Inventory.
 - MAC vendor enrichment is local-only and rendered as candidate hints, not confirmed roles.
+- Manual Inventory Drafts are marked review-required and use Unknown / low-confidence discovered facts for household meaning.
 - Facts carry Evidence and freshness information; stale facts are rendered visibly.
 - Runbook titles must describe Stress User symptoms rather than guessed root causes.
 - First Checks must be Safe Actions.

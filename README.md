@@ -85,6 +85,14 @@ python -m steadlore_house.cli discover-network \
   --output dist/network-snapshot.md
 ```
 
+You can also generate a review-required Manual Inventory draft from the curated candidates:
+
+```bash
+python -m steadlore_house.cli discover-network \
+  --output dist/network-snapshot.md \
+  --inventory-draft dist/inventory-draft.yaml
+```
+
 Steadlore automatically tries to enrich MAC addresses from a local `nmap-mac-prefixes` file when one is installed. You can override this with a local `nmap-mac-prefixes` or IEEE OUI file:
 
 ```bash

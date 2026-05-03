@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import builtins
 import shutil
 from pathlib import Path
 
@@ -10,7 +11,8 @@ from .render_ai_packet import render_ai_packet
 from .render_manual import render_manual
 from .render_inventory_draft import render_inventory_draft
 from .render_network_snapshot import render_network_snapshot
-from .validation import validate_relationships
+from .review_inventory_draft import InventoryDraftReviewError, load_inventory_draft, render_reviewed_inventory, review_inventory_draft_interactive
+from .validation import ValidationError, validate_relationships
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -39,7 +41,7 @@ def build_parser() -> argparse.ArgumentParser:
 """,
     )
     generate.add_argument("--inventory", required=True, type=Path, help="Path to household inventory YAML.")
-    generate.add_argument("--runbooks", required=True, type=Path, help="Path to a runbook YAML file or directory.")
+    generate.add_argument("--runbooks", type=Path, help="Path to a runbook YAML file or directory. If omitted, the manual is generated without runbooks.")
     generate.add_argument("--output", required=True, type=Path, help="Path for generated Markdown output. If this is an existing directory, continuity-manual.md is written inside it.")
 
     ai_packet = subcommands.add_parser(
@@ -92,17 +94,44 @@ Examples:
     discover.add_argument("--subnet", action="append", default=[], help="Subnet to scan when --active-scan is used, such as 192.0.2.0/24. Can be repeated. If omitted, local IPv4 subnets are discovered from interfaces.")
     discover.add_argument("--mac-vendors", type=Path, help="Optional local nmap-mac-prefixes or IEEE OUI file for offline MAC vendor enrichment. Overrides automatic local nmap-mac-prefixes discovery.")
     discover.add_argument("--inventory-draft", type=Path, help="Optional path for a review-required Manual Inventory draft YAML. If this is an existing directory, inventory-draft.yaml is written inside it.")
+
+    review = subcommands.add_parser(
+        "review-inventory-draft",
+        help="Interactively promote inventory draft candidates into reviewed Manual Inventory.",
+        description="Review a generated Manual Inventory Draft and write clean Manual Inventory YAML. Candidates are promoted only when the operator confirms them and reviews required household meaning.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""Promotion rule:
+  A candidate is promoted when the operator confirms it and provides reviewed ID, name, device type, core_infrastructure status, location, and Household Impact.
+  Review metadata is removed from the output.
+
+Example:
+  steadlore-house review-inventory-draft \\
+    --draft dist/inventory-draft.yaml \\
+    --output household.yaml
+""",
+    )
+    review.add_argument("--draft", required=True, type=Path, help="Path to a review-required Manual Inventory draft YAML.")
+    review.add_argument("--output", required=True, type=Path, help="Path for reviewed Manual Inventory YAML. If this is an existing directory, household.yaml is written inside it.")
+    review.add_argument("--force", action="store_true", help="Allow overwriting an existing reviewed inventory output file.")
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
+    try:
+        return _main(parser, argv)
+    except KeyboardInterrupt:
+        parser.exit(130, "\nCancelled.\n")
+
+
+def _main(parser: argparse.ArgumentParser, argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "generate-manual":
-        _print_status(f"Generating Continuity Manual from {args.inventory} and {args.runbooks}...")
+        runbook_source = args.runbooks or "no runbooks"
+        _print_status(f"Generating Continuity Manual from {args.inventory} and {runbook_source}...")
         inventory = load_inventory(args.inventory)
-        runbooks = load_runbooks(args.runbooks)
+        runbooks = load_runbooks(args.runbooks) if args.runbooks else []
         validate_relationships(inventory, runbooks)
         manual = render_manual(inventory, runbooks)
         output_path = _write_markdown(args.output, manual, default_filename="continuity-manual.md", parser=parser)
@@ -137,6 +166,21 @@ def main(argv: list[str] | None = None) -> int:
             draft = render_inventory_draft(snapshot)
             draft_path = _write_text(args.inventory_draft, draft, default_filename="inventory-draft.yaml", parser=parser)
             _print_status(f"Wrote review-required Manual Inventory draft to {draft_path}")
+        return 0
+
+    if args.command == "review-inventory-draft":
+        output_path = _resolve_output_path(args.output, default_filename="household.yaml")
+        if output_path.exists() and not args.force:
+            parser.error(f"output already exists: {output_path}. Use --force to overwrite.")
+        _print_status(f"Reviewing Manual Inventory draft from {args.draft}...")
+        try:
+            draft = load_inventory_draft(args.draft)
+            reviewed = review_inventory_draft_interactive(draft, prompt=builtins.input)
+            rendered = render_reviewed_inventory(reviewed)
+        except (InventoryDraftReviewError, ValidationError) as error:
+            parser.error(str(error))
+        _write_text(args.output, rendered, default_filename="household.yaml", parser=parser)
+        _print_status(f"Wrote reviewed Manual Inventory to {output_path}")
         return 0
 
     parser.error(f"Unknown command: {args.command}")

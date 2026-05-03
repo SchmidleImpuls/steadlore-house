@@ -458,5 +458,13 @@ def _ensure_list(value: object) -> list:
     return value if isinstance(value, list) else [value]
 
 
-def _run(command: list[str], *, timeout: int = 10) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(command, capture_output=True, text=True, timeout=timeout, check=False)
+def _run(command: list[str], *, timeout: int = 30) -> subprocess.CompletedProcess[str]:
+    try:
+        return subprocess.run(command, capture_output=True, text=True, timeout=timeout, check=False)
+    except subprocess.TimeoutExpired as error:
+        return subprocess.CompletedProcess(
+            args=command,
+            returncode=124,
+            stdout=error.stdout.decode() if isinstance(error.stdout, bytes) else (error.stdout or ""),
+            stderr=f"Command timed out after {timeout} seconds.",
+        )

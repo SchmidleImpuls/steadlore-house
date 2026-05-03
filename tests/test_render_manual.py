@@ -12,6 +12,7 @@ def test_render_manual_includes_staleness_and_modes() -> None:
     manual = render_manual(inventory, runbooks, now=datetime(2026, 5, 1, tzinfo=UTC))
 
     assert "# Example Household Continuity Manual" in manual
+    assert "Audience: household members and trusted persons" in manual
     assert "STALE" in manual
     assert "## Start Here" in manual
     assert "## Safety Rules" in manual
@@ -41,9 +42,30 @@ def test_render_manual_includes_staleness_and_modes() -> None:
     assert helper_index < facts_index
 
 
+def test_render_manual_with_inventory_only_explains_missing_sections() -> None:
+    inventory = load_inventory(Path("dist/inventory-draft.yaml"))
+
+    manual = render_manual(inventory, [], now=datetime(2026, 5, 1, tzinfo=UTC))
+
+    assert "No runbooks have been added yet" in manual
+    assert "No people have been added yet" in manual
+    assert "No services have been added yet" in manual
+    assert "### Service Evidence" not in manual
+    assert "### Devices" in manual
+
+
 def test_render_manual_is_deterministic_for_same_inputs() -> None:
     inventory = load_inventory(Path("examples/household.yaml"))
     runbooks = load_runbooks(Path("examples/runbooks"))
     now = datetime(2026, 5, 1, tzinfo=UTC)
 
     assert render_manual(inventory, runbooks, now=now) == render_manual(inventory, runbooks, now=now)
+
+
+def test_render_manual_uses_single_blank_line_between_sections() -> None:
+    inventory = load_inventory(Path("dist/inventory-draft.yaml"))
+
+    manual = render_manual(inventory, [], now=datetime(2026, 5, 1, tzinfo=UTC))
+
+    assert "\n\n\n## Household Systems" not in manual
+    assert "\n\n## Household Systems" in manual

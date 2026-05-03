@@ -1,12 +1,12 @@
 _draft_notice: Draft only. Review before using as Manual Inventory. Discovery candidates do not confirm role, location, owner, or Household Impact.
 household_name: Draft Household
-generated_for: trusted people and operators
+generated_for: household members and trusted persons
 people: []
 devices:
-- id: candidate-device-192-0-2-1
+- id: device-2847cc74-b6df-58b2-afa3-f4e4b000dd15
   name: Gateway candidate 192.0.2.1
   device_type: Gateway
-  core: true
+  core_infrastructure: true
   location: Unknown
   household_impact: Likely core network infrastructure. If unavailable, internet access and local routing may be affected. Review required.
   _review:
@@ -22,7 +22,7 @@ devices:
     - id
     - name
     - device_type
-    - core
+    - core_infrastructure
     - location
     - household_impact
     mac_address: 00:00:5E:00:53:01
@@ -58,10 +58,10 @@ devices:
       freshness_days: 7
       status: discovered
       confidence: low
-- id: candidate-device-192-0-2-53
+- id: device-afcadd2c-f9bd-5dcb-8bac-dead10e4b56a
   name: DNS server candidate 192.0.2.53
   device_type: Network Device
-  core: true
+  core_infrastructure: true
   location: Unknown
   household_impact: Likely core network infrastructure. If unavailable, local name resolution may be affected. Review required.
   _review:
@@ -76,7 +76,7 @@ devices:
     - id
     - name
     - device_type
-    - core
+    - core_infrastructure
     - location
     - household_impact
   facts:

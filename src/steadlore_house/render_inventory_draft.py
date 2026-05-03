@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import re
+import uuid
 from typing import Any
 
 import yaml
@@ -15,7 +15,7 @@ def render_inventory_draft(snapshot: NetworkSnapshot) -> str:
     data: dict[str, Any] = {
         "_draft_notice": "Draft only. Review before using as Manual Inventory. Discovery candidates do not confirm role, location, owner, or Household Impact.",
         "household_name": "Draft Household",
-        "generated_for": "trusted people and operators",
+        "generated_for": "household members and trusted persons",
         "people": [],
         "devices": [_device_from_candidate(candidate, snapshot) for candidate in candidates],
         "services": [],
@@ -30,7 +30,7 @@ def _device_from_candidate(candidate: Candidate, snapshot: NetworkSnapshot) -> d
         "id": _candidate_id(candidate.ip_address),
         "name": _suggest_name(candidate),
         "device_type": _suggest_device_type(candidate),
-        "core": _is_core_candidate(candidate),
+        "core_infrastructure": _is_core_candidate(candidate),
         "location": "Unknown",
         "household_impact": _suggest_household_impact(candidate),
         "_review": _review_metadata(candidate),
@@ -46,7 +46,7 @@ def _review_metadata(candidate: Candidate) -> dict[str, Any]:
         "reasons": list(candidate.reasons),
         "suggested_device_type": _suggest_device_type(candidate),
         "suggested_core": _is_core_candidate(candidate),
-        "fields_to_review": ["id", "name", "device_type", "core", "location", "household_impact"],
+        "fields_to_review": ["id", "name", "device_type", "core_infrastructure", "location", "household_impact"],
     }
     if candidate.mac_address:
         data["mac_address"] = candidate.mac_address
@@ -154,5 +154,4 @@ def _vendor_source(snapshot: NetworkSnapshot) -> str:
 
 
 def _candidate_id(ip_address: str) -> str:
-    normalized = re.sub(r"[^a-zA-Z0-9]+", "-", ip_address).strip("-").lower()
-    return f"candidate-device-{normalized}"
+    return f"device-{uuid.uuid5(uuid.NAMESPACE_URL, f'steadlore-house:network-candidate:{ip_address}')!s}"

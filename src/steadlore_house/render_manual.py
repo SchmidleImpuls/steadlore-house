@@ -9,26 +9,35 @@ from .staleness import age_in_days, is_stale
 
 def render_manual(inventory: Inventory, runbooks: list[Runbook], *, now: datetime | None = None) -> str:
     current = now or datetime.now(UTC)
-    lines: list[str] = []
-    lines.append(f"# {inventory.household_name} Continuity Manual")
-    lines.append("")
-    lines.append(f"Generated: {current.astimezone(UTC).isoformat().replace('+00:00', 'Z')}")
-    lines.append(f"Audience: {inventory.generated_for}")
-    lines.append("")
-    lines.append("> This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.")
-    lines.append("")
-    lines.extend(_render_start_here(runbooks))
-    lines.extend(_render_safety_rules())
-    lines.extend(_render_runbooks(runbooks, inventory, current))
-    lines.extend(_render_people(inventory))
-    lines.extend(_render_secret_references(inventory))
-    lines.extend(_render_services(inventory, current))
-    lines.extend(_render_helper_section(runbooks, inventory, current))
-    return "\n".join(lines).rstrip() + "\n"
+    sections: list[list[str]] = [
+        [
+            f"# {inventory.household_name} Continuity Manual",
+            "",
+            f"Generated: {current.astimezone(UTC).isoformat().replace('+00:00', 'Z')}",
+            f"Audience: {inventory.generated_for}",
+            "",
+            "> This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.",
+        ],
+        _render_start_here(runbooks),
+        _render_safety_rules(),
+        _render_runbooks(runbooks, inventory, current),
+        _render_people(inventory),
+        _render_secret_references(inventory),
+        _render_services(inventory, current),
+        _render_helper_section(runbooks, inventory, current),
+    ]
+    return _join_sections(sections)
+
+
+def _join_sections(sections: list[list[str]]) -> str:
+    chunks = ["\n".join(section).strip() for section in sections if section]
+    return "\n\n".join(chunk for chunk in chunks if chunk).rstrip() + "\n"
 
 
 def _render_people(inventory: Inventory) -> list[str]:
     lines = ["## Who Can Help", ""]
+    if not inventory.people:
+        lines.append("No people have been added yet. Add at least one Trusted Person so the manual can show escalation contacts if the primary operator is unavailable.")
     for person in sorted(inventory.people, key=lambda item: item.name):
         suffix = f" — {person.contact_hint}" if person.contact_hint else ""
         lines.append(f"- **{person.name}** ({person.role}){suffix}")
@@ -40,9 +49,12 @@ def _render_start_here(runbooks: list[Runbook]) -> list[str]:
     lines = ["## Start Here", ""]
     lines.append("If something is not working, choose the closest symptom below. Do the safe checks only. Do not reset or unplug infrastructure unless this manual specifically says to, or a trusted technical helper asks you to.")
     lines.append("")
-    lines.append("Common symptoms:")
-    for runbook in sorted(runbooks, key=lambda item: item.symptom):
-        lines.append(f"- {runbook.symptom}")
+    if not runbooks:
+        lines.append("No runbooks have been added yet. The manual can still describe reviewed household systems, but symptom-specific recovery guidance is not available.")
+    else:
+        lines.append("Common symptoms:")
+        for runbook in sorted(runbooks, key=lambda item: item.symptom):
+            lines.append(f"- {runbook.symptom}")
     lines.append("")
     return lines
 
@@ -60,6 +72,10 @@ def _render_safety_rules() -> list[str]:
 
 def _render_services(inventory: Inventory, now: datetime) -> list[str]:
     lines = ["## Household Systems", ""]
+    if not inventory.services:
+        lines.append("No services have been added yet. Reviewed devices can still appear in the helper section, but household-facing service explanations are not available.")
+        lines.append("")
+        return lines
     for service in sorted(inventory.services, key=lambda item: item.name):
         importance = "High" if service.critical else "Normal"
         lines.append(f"### {service.name}")
@@ -79,11 +95,15 @@ def _render_services(inventory: Inventory, now: datetime) -> list[str]:
 
 def _render_devices(inventory: Inventory, now: datetime) -> list[str]:
     lines = ["### Devices", ""]
+    if not inventory.devices:
+        lines.append("No devices have been added yet.")
+        lines.append("")
+        return lines
     for device in sorted(inventory.devices, key=lambda item: item.name):
         lines.append(f"#### {device.name}")
         lines.append("")
         lines.append(f"Type: {device.device_type}")
-        lines.append(f"Core infrastructure: {'Yes' if device.core else 'No'}")
+        lines.append(f"Core infrastructure: {'Yes' if device.core_infrastructure else 'No'}")
         lines.append(f"Location: {device.location}")
         lines.append(f"Household Impact: {device.household_impact}")
         lines.extend(_render_facts(device.facts, now))
@@ -138,6 +158,10 @@ def _render_secret_references(inventory: Inventory) -> list[str]:
 
 def _render_runbooks(runbooks: list[Runbook], inventory: Inventory, now: datetime) -> list[str]:
     lines = ["## Common Problems", ""]
+    if not runbooks:
+        lines.append("No symptom runbooks have been added yet.")
+        lines.append("")
+        return lines
     service_by_id = {service.id: service for service in inventory.services}
     for runbook in sorted(runbooks, key=lambda item: item.symptom):
         lines.append(f"### {runbook.symptom}")
@@ -201,10 +225,11 @@ def _render_helper_section(runbooks: list[Runbook], inventory: Inventory, now: d
 
 
 def _render_service_facts(inventory: Inventory, now: datetime) -> list[str]:
+    services_with_facts = [service for service in sorted(inventory.services, key=lambda item: item.name) if service.facts]
+    if not services_with_facts:
+        return []
     lines = ["### Service Evidence", ""]
-    for service in sorted(inventory.services, key=lambda item: item.name):
-        if not service.facts:
-            continue
+    for service in services_with_facts:
         lines.append(f"#### {service.name}")
         lines.extend(_render_facts(service.facts, now))
         lines.append("")

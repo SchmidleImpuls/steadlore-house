@@ -84,6 +84,8 @@ def validate_inventory_data(data: Mapping[str, Any], *, path: str) -> None:
         _require_mapping(device, item_path, errors)
         if isinstance(device, Mapping):
             _require(device, ["id", "name", "device_type", "location", "household_impact"], item_path, errors)
+            if "core" in device:
+                errors.append(f"{item_path}.core is not supported; use core_infrastructure")
             _validate_facts(device.get("facts", []), f"{item_path}.facts", errors)
 
     for index, service in enumerate(_as_list(data.get("services"))):

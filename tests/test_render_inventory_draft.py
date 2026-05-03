@@ -1,4 +1,5 @@
 from datetime import UTC, datetime
+import uuid
 
 import yaml
 
@@ -33,15 +34,15 @@ def test_render_inventory_draft_from_network_candidates_is_review_required_and_v
     validate_inventory_data(data, path="inventory-draft")
     inventory = Inventory.from_dict(data)
     assert data["_draft_notice"].startswith("Draft only")
-    assert inventory.devices[0].id == "candidate-device-192-0-2-1"
+    assert inventory.devices[0].id == f"device-{uuid.uuid5(uuid.NAMESPACE_URL, 'steadlore-house:network-candidate:192.0.2.1')!s}"
     assert inventory.devices[0].name == "Gateway candidate 192.0.2.1"
     assert inventory.devices[0].device_type == "Gateway"
-    assert inventory.devices[0].core is True
+    assert inventory.devices[0].core_infrastructure is True
     assert inventory.devices[0].location == "Unknown"
     assert "internet access and local routing may be affected" in inventory.devices[0].household_impact
     assert data["devices"][0]["_review"]["vendor"] == "Example Networks"
     assert data["devices"][0]["_review"]["connector_hints"] == ["example connector candidate"]
-    assert data["devices"][0]["_review"]["fields_to_review"] == ["id", "name", "device_type", "core", "location", "household_impact"]
+    assert data["devices"][0]["_review"]["fields_to_review"] == ["id", "name", "device_type", "core_infrastructure", "location", "household_impact"]
     fact_texts = [fact.text for fact in inventory.devices[0].facts]
     assert "Observed 192.0.2.1 as default gateway candidate, vendor-enriched observed neighbor." in fact_texts
     assert "Offline MAC vendor lookup suggests Example Networks for 192.0.2.1." in fact_texts

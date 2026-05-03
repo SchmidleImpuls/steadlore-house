@@ -93,6 +93,14 @@ python -m steadlore_house.cli discover-network \
   --inventory-draft dist/inventory-draft.yaml
 ```
 
+Review and promote draft candidates into Manual Inventory with:
+
+```bash
+python -m steadlore_house.cli review-inventory-draft \
+  --draft dist/inventory-draft.yaml \
+  --output household.yaml
+```
+
 Steadlore automatically tries to enrich MAC addresses from a local `nmap-mac-prefixes` file when one is installed. You can override this with a local `nmap-mac-prefixes` or IEEE OUI file:
 
 ```bash
@@ -124,6 +132,11 @@ Generate the example manual outputs with:
 python -m steadlore_house.cli generate-manual \
   --inventory examples/household.yaml \
   --runbooks examples/runbooks \
+  --output dist/continuity-manual.md
+
+# Runbooks are optional while you are still reviewing inventory.
+python -m steadlore_house.cli generate-manual \
+  --inventory household.yaml \
   --output dist/continuity-manual.md
 
 python -m steadlore_house.cli generate-ai-packet \

@@ -1,5 +1,5 @@
 household_name: Example Household
-generated_for: trusted people and operators
+generated_for: household members and trusted persons
 
 people:
   - id: primary-operator

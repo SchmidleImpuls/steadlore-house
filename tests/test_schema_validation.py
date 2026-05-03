@@ -14,6 +14,29 @@ def test_requires_inventory_fields() -> None:
         validate_inventory_data({"people": [], "devices": [], "services": [], "secret_references": []}, path="inventory")
 
 
+def test_rejects_legacy_core_device_field() -> None:
+    data = {
+        "household_name": "Example",
+        "people": [],
+        "secret_references": [],
+        "services": [],
+        "devices": [
+            {
+                "id": "gateway",
+                "name": "Gateway",
+                "device_type": "Gateway",
+                "core": True,
+                "location": "Utility cabinet",
+                "household_impact": "Provides network connectivity.",
+            }
+        ],
+    }
+
+    with pytest.raises(ValidationError, match="use core_infrastructure"):
+        validate_inventory_data(data, path="inventory")
+
+
+
 def test_validates_access_endpoint_urls() -> None:
     data = {
         "household_name": "Example",

@@ -76,7 +76,7 @@ class Device:
     device_type: str
     location: str
     household_impact: str
-    core: bool = False
+    core_infrastructure: bool = False
     facts: list[Fact] = field(default_factory=list)
 
     @classmethod
@@ -87,7 +87,7 @@ class Device:
             device_type=data["device_type"],
             location=data["location"],
             household_impact=data["household_impact"],
-            core=bool(data.get("core", False)),
+            core_infrastructure=bool(data.get("core_infrastructure", False)),
             facts=[Fact.from_dict(item) for item in data.get("facts", [])],
         )
 
@@ -141,7 +141,7 @@ class Inventory:
     def from_dict(cls, data: dict[str, Any]) -> "Inventory":
         return cls(
             household_name=data["household_name"],
-            generated_for=data.get("generated_for", "trusted people and operators"),
+            generated_for=data.get("generated_for", "household members and trusted persons"),
             people=[Person.from_dict(item) for item in data.get("people", [])],
             devices=[Device.from_dict(item) for item in data.get("devices", [])],
             services=[Service.from_dict(item) for item in data.get("services", [])],

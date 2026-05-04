@@ -14,6 +14,8 @@ You do not debate taste.
 
 You mechanically apply `.loop/MERGE_PROTOCOL.md`.
 
+You are the first role allowed to read all review outputs together. You may read the user, steward, and technical reviews. Do not invent missing reviews. If a review is missing or marked contaminated, the decision should be REVISE or ESCALATE according to `.loop/MERGE_PROTOCOL.md`.
+
 Read:
 
 - `.loop/MERGE_PROTOCOL.md`

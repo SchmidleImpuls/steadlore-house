@@ -52,8 +52,6 @@ def _review_metadata(candidate: Candidate) -> dict[str, Any]:
         data["mac_address"] = candidate.mac_address
     if candidate.vendor:
         data["vendor"] = candidate.vendor
-    if candidate.connector_hints:
-        data["connector_hints"] = list(candidate.connector_hints)
     return data
 
 
@@ -78,13 +76,6 @@ def _facts_from_candidate(candidate: Candidate, snapshot: NetworkSnapshot) -> li
                 "evidence": _evidence(snapshot, source=_vendor_source(snapshot), confidence="low"),
             }
         )
-    for hint in candidate.connector_hints:
-        facts.append(
-            {
-                "text": f"Possible connector candidate for {candidate.ip_address}: {hint}.",
-                "evidence": _evidence(snapshot, source="offline MAC vendor hint", confidence="low"),
-            }
-        )
     return facts
 
 
@@ -100,7 +91,6 @@ def _suggest_name(candidate: Candidate) -> str:
 
 def _suggest_device_type(candidate: Candidate) -> str:
     vendor = (candidate.vendor or "").lower()
-    hints = " ".join(candidate.connector_hints).lower()
     if "default gateway candidate" in candidate.reasons:
         return "Gateway"
     if "DNS server candidate" in candidate.reasons:
@@ -111,11 +101,11 @@ def _suggest_device_type(candidate: Candidate) -> str:
         return "NAS"
     if "raspberry pi" in vendor:
         return "Host"
-    if "sonos" in vendor or "sonos" in hints:
+    if "sonos" in vendor:
         return "Smart Speaker"
     if "shelly" in vendor or "espressif" in vendor:
         return "Smart Home Device"
-    if "ubiquiti" in vendor or "unifi" in hints:
+    if "ubiquiti" in vendor:
         return "Network Device"
     return "Unknown"
 

@@ -44,6 +44,20 @@ def test_review_inventory_draft_promotes_confirmed_candidate() -> None:
     assert "_draft_notice" not in rendered
 
 
+def test_review_inventory_draft_does_not_surface_legacy_connector_hints() -> None:
+    data = load_inventory_draft(Path("dist/inventory-draft.yaml"))
+    data["devices"][0]["_review"]["connector_hints"] = ["legacy connector candidate"]
+    answers = iter(["Example Household", "n", "n", "n"])
+    messages: list[str] = []
+
+    review_inventory_draft_interactive(data, prompt=lambda text: next(answers), output=messages.append)
+
+    rendered_messages = "\n".join(messages)
+    assert "Connector hints" not in rendered_messages
+    assert "legacy connector candidate" not in rendered_messages
+
+
+
 def test_core_infrastructure_candidate_defaults_to_promote() -> None:
     data = load_inventory_draft(Path("dist/inventory-draft.yaml"))
     answers = iter(

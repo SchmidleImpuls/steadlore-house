@@ -41,11 +41,13 @@ def test_render_inventory_draft_from_network_candidates_is_review_required_and_v
     assert inventory.devices[0].location == "Unknown"
     assert "internet access and local routing may be affected" in inventory.devices[0].household_impact
     assert data["devices"][0]["_review"]["vendor"] == "Example Networks"
-    assert data["devices"][0]["_review"]["connector_hints"] == ["example connector candidate"]
+    assert "connector_hints" not in data["devices"][0]["_review"]
+    assert "connector_hints" not in rendered
+    assert "example connector candidate" not in rendered
     assert data["devices"][0]["_review"]["fields_to_review"] == ["id", "name", "device_type", "core_infrastructure", "location", "household_impact"]
     fact_texts = [fact.text for fact in inventory.devices[0].facts]
     assert "Observed 192.0.2.1 as default gateway candidate, vendor-enriched observed neighbor." in fact_texts
     assert "Offline MAC vendor lookup suggests Example Networks for 192.0.2.1." in fact_texts
-    assert "Possible connector candidate for 192.0.2.1: example connector candidate." in fact_texts
+    assert all("Possible connector candidate" not in text for text in fact_texts)
     assert all(fact.evidence.status == "discovered" for fact in inventory.devices[0].facts)
     assert all(fact.evidence.confidence == "low" for fact in inventory.devices[0].facts)

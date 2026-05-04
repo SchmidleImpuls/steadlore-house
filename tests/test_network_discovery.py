@@ -120,6 +120,19 @@ def test_core_infrastructure_candidates_include_gateway_dns_and_vendor_hints() -
     assert candidates[0].connector_hints == ("UniFi connector candidate",)
 
 
+def test_core_infrastructure_candidates_do_not_promote_connector_hint_only_observations() -> None:
+    snapshot = NetworkSnapshot(
+        observed_at=datetime(2026, 5, 1, tzinfo=UTC),
+        method="passive local OS snapshot",
+        neighbors=(
+            NetworkNeighbor(ip_address="192.0.2.44", connector_hints=("example connector candidate",)),
+        ),
+    )
+
+    assert core_infrastructure_candidates(snapshot) == []
+
+
+
 def test_renders_network_snapshot_with_map_and_limits() -> None:
     snapshot = NetworkSnapshot(
         observed_at=datetime(2026, 5, 1, tzinfo=UTC),
@@ -140,7 +153,10 @@ def test_renders_network_snapshot_with_map_and_limits() -> None:
     assert "observational snapshot, not trusted household inventory" in rendered
     assert "## Core Infrastructure Candidates" in rendered
     assert "Example Networks" in rendered
-    assert "example connector candidate" in rendered
+    assert "Possible Connector Candidates" not in rendered
+    assert "connector candidates" not in rendered
+    assert "connector hints" not in rendered.lower()
+    assert "example connector candidate" not in rendered
     assert "```mermaid" in rendered
     assert "192.0.2.1" in rendered
     assert "192.0.2.53" in rendered

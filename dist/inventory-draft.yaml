@@ -27,8 +27,6 @@ devices:
     - household_impact
     mac_address: 00:00:5E:00:53:01
     vendor: Example Networks
-    connector_hints:
-    - example connector candidate
   facts:
   - text: Observed 192.0.2.1 as default gateway candidate, vendor-enriched observed neighbor.
     evidence:
@@ -47,13 +45,6 @@ devices:
   - text: Offline MAC vendor lookup suggests Example Networks for 192.0.2.1.
     evidence:
       source: 'MAC vendor enrichment: example-vendors.txt'
-      last_verified: '2026-05-01T00:00:00Z'
-      freshness_days: 7
-      status: discovered
-      confidence: low
-  - text: 'Possible connector candidate for 192.0.2.1: example connector candidate.'
-    evidence:
-      source: offline MAC vendor hint
       last_verified: '2026-05-01T00:00:00Z'
       freshness_days: 7
       status: discovered

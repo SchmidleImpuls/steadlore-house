@@ -100,8 +100,6 @@ def _print_candidate(device: dict[str, Any], review: dict[str, Any], output: Out
         output(f"  Vendor: {review['vendor']}")
     if review.get("reasons"):
         output(f"  Reasons: {', '.join(str(item) for item in review['reasons'])}")
-    if review.get("connector_hints"):
-        output(f"  Connector hints: {', '.join(str(item) for item in review['connector_hints'])}")
     output(f"  Suggested type: {device.get('device_type', 'Unknown')}")
     output(f"  Suggested core infrastructure: {bool(device.get('core_infrastructure', False))}")
     output(f"  Suggested household impact: {device.get('household_impact', 'Unknown')}")

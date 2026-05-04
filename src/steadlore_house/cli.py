@@ -80,7 +80,7 @@ Optional active scan:
 MAC vendor enrichment:
   By default, Steadlore tries to find a local nmap-mac-prefixes file and uses it offline.
   --mac-vendors overrides auto-discovery with a local nmap-mac-prefixes or IEEE OUI file.
-  Vendor names are connector hints only; they do not confirm device role or Household Impact.
+  Vendor names are discovery observations only; they do not confirm device role or Household Impact.
 
 Examples:
   steadlore-house discover-network --output dist/network-snapshot.md

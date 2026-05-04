@@ -31,7 +31,6 @@ def render_network_snapshot(snapshot: NetworkSnapshot) -> str:
     candidates = core_infrastructure_candidates(snapshot)
     lines.extend(_render_summary(snapshot, candidates))
     lines.extend(_render_candidates(candidates))
-    lines.extend(_render_connector_candidates(candidates))
     lines.extend(_render_mermaid(snapshot, candidates))
     lines.extend(_render_interfaces(snapshot))
     lines.extend(_render_routes(snapshot))
@@ -63,7 +62,7 @@ def core_infrastructure_candidates(snapshot: NetworkSnapshot) -> list[Candidate]
     for neighbor in neighbor_by_ip.values():
         if _is_noise_address(neighbor.ip_address):
             continue
-        if neighbor.vendor or neighbor.connector_hints:
+        if neighbor.vendor:
             existing = by_ip.get(neighbor.ip_address)
             reasons = tuple([*(existing.reasons if existing else ()), "vendor-enriched observed neighbor"])
             by_ip[neighbor.ip_address] = _candidate_from_neighbor(neighbor.ip_address, neighbor, reasons)
@@ -71,7 +70,7 @@ def core_infrastructure_candidates(snapshot: NetworkSnapshot) -> list[Candidate]
     for host in snapshot.active_scan_hosts:
         if _is_noise_address(host.ip_address):
             continue
-        if host.vendor or host.connector_hints:
+        if host.vendor:
             existing = by_ip.get(host.ip_address)
             reasons = tuple([*(existing.reasons if existing else ()), "vendor-enriched nmap ping host"])
             by_ip[host.ip_address] = Candidate(
@@ -131,21 +130,7 @@ def _render_candidates(candidates: list[Candidate]) -> list[str]:
             lines.append(f"  - Interfaces: {', '.join(candidate.interfaces)}")
         if candidate.state:
             lines.append(f"  - Last-known neighbor state: {candidate.state}")
-        if candidate.connector_hints:
-            lines.append(f"  - Possible connector candidates: {', '.join(candidate.connector_hints)}")
         lines.append("  - Confidence: candidate only; confirm manually")
-    lines.append("")
-    return lines
-
-
-def _render_connector_candidates(candidates: list[Candidate]) -> list[str]:
-    hints = sorted({hint for candidate in candidates for hint in candidate.connector_hints})
-    lines = ["## Possible Connector Candidates", ""]
-    if not hints:
-        lines.append("- None. Provide a local MAC vendor file to enable offline vendor enrichment.")
-    else:
-        for hint in hints:
-            lines.append(f"- {hint}")
     lines.append("")
     return lines
 
@@ -233,8 +218,6 @@ def _render_neighbors(snapshot: NetworkSnapshot) -> list[str]:
             parts.append(f"interface: {neighbor.interface}")
         if neighbor.state:
             parts.append(f"state: {neighbor.state}")
-        if neighbor.connector_hints:
-            parts.append(f"connector candidates: {', '.join(neighbor.connector_hints)}")
         lines.append(f"- {'; '.join(parts)}")
     lines.append("")
     return lines
@@ -256,8 +239,6 @@ def _render_active_scan(snapshot: NetworkSnapshot) -> list[str]:
             parts.append(f"vendor: {host.vendor}")
         if host.state:
             parts.append(f"state: {host.state}")
-        if host.connector_hints:
-            parts.append(f"connector candidates: {', '.join(host.connector_hints)}")
         lines.append(f"- {'; '.join(parts)}")
     lines.append("")
     return lines

@@ -21,10 +21,9 @@ The initial Network Discovery Snapshot may include:
 - optional active ping-scan hosts when explicitly requested with `nmap`; scan targets can be explicit or derived from local IPv4 interface subnets
 - optional offline MAC vendor enrichment from an automatically discovered local `nmap-mac-prefixes` file or an explicit local OUI file
 - core infrastructure candidates derived from routes, DNS servers, vendor enrichment, and optional active scan results
-- possible connector candidates based on vendor hints
 - evidence sources and warnings
 
-Discovery Snapshots must not infer household meaning. For example, a default gateway may be labeled as an observed gateway, and a MAC vendor may suggest a possible connector, but role, owner, location, and Household Impact require Manual Inventory confirmation.
+Discovery Snapshots must not infer household meaning. For example, a default gateway may be labeled as an observed gateway, and an offline MAC vendor lookup may suggest a vendor name, but role, owner, location, and Household Impact require Manual Inventory confirmation.
 
 ### Manual Inventory Draft
 
@@ -35,7 +34,7 @@ A draft:
 - is review-required
 - may include candidate Devices only
 - uses opaque stable candidate Device IDs derived from discovery identifiers; operators may replace them during review
-- stores structured `_review` metadata for candidate IP address, vendor, reasons, connector hints, and fields to review
+- stores structured `_review` metadata for candidate IP address, vendor, reasons, and fields to review
 - may deterministically suggest `device_type`, `core_infrastructure`, and conservative Household Impact for default gateway and DNS candidates
 - uses `Unknown` for role-like fields that discovery cannot know, such as Location
 - marks discovered Facts with low confidence

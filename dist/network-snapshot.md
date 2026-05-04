@@ -24,15 +24,10 @@ These are candidates only. Confirm role, location, owner, and Household Impact b
   - Vendor: Example Networks
   - Interfaces: eth0
   - Last-known neighbor state: REACHABLE
-  - Possible connector candidates: example connector candidate
   - Confidence: candidate only; confirm manually
 - **192.0.2.53**
   - Why listed: DNS server candidate
   - Confidence: candidate only; confirm manually
-
-## Possible Connector Candidates
-
-- example connector candidate
 
 ## Network Map
 
@@ -59,7 +54,7 @@ graph TD
 
 ## Observed Neighbors
 
-- 192.0.2.1; MAC: 00:00:5E:00:53:01; vendor: Example Networks; interface: eth0; state: REACHABLE; connector candidates: example connector candidate
+- 192.0.2.1; MAC: 00:00:5E:00:53:01; vendor: Example Networks; interface: eth0; state: REACHABLE
 
 ## Ignored Network Noise
 

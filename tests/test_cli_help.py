@@ -12,6 +12,7 @@ from steadlore_house.cli import main
         (["generate-ai-packet", "--help"], "must not authorize privileged actions"),
         (["discover-network", "--help"], "Does not perform port scans"),
         (["discover-network", "--help"], "offline MAC vendor enrichment"),
+        (["discover-network", "--help"], "Vendor names are discovery observations"),
         (["discover-network", "--help"], "review-required Manual Inventory"),
         (["review-inventory-draft", "--help"], "A candidate is promoted"),
     ],

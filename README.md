@@ -63,7 +63,7 @@ The same source data can also produce an AI Assistance Packet for a chatbot help
 
 Steadlore House is not a generic chatbot, smart-home hub, password manager, monitoring dashboard, estate-planning app, or autonomous infrastructure agent.
 
-The first useful artifact is the continuity manual.
+The first useful household continuity artifact is the continuity manual. The first Operator setup value may come from an Infrastructure Map that helps review discovered and known household infrastructure.
 
 Conversation interfaces, connectors, diagnostics, and supervised remediation may come later, but they must serve the manual and the safety model.
 
@@ -73,8 +73,8 @@ Start with:
 
 - [`AGENTS.md`](AGENTS.md)
 - [`CONTRIBUTING.md`](CONTRIBUTING.md)
-- [`docs/vision.md`](docs/vision.md)
-- [`docs/ubiquitous-language.md`](docs/ubiquitous-language.md)
+- [`docs/product/VISION.md`](docs/product/VISION.md)
+- [`docs/product/UBIQUITOUS_LANGUAGE.md`](docs/product/UBIQUITOUS_LANGUAGE.md)
 - [`docs/data-model.md`](docs/data-model.md)
 
 Generate a local network snapshot with:

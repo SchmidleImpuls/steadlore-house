@@ -10,8 +10,8 @@ Before contributing, read:
 
 - `README.md`
 - `AGENTS.md`
-- `docs/vision.md`
-- `docs/ubiquitous-language.md`
+- `docs/product/VISION.md`
+- `docs/product/UBIQUITOUS_LANGUAGE.md`
 
 If you are an AI coding agent, treat `AGENTS.md` as binding project guidance.
 
@@ -57,7 +57,7 @@ If the answer is no, the feature probably belongs elsewhere.
 
 ## Ubiquitous language
 
-Use the terms defined in `docs/ubiquitous-language.md`.
+Use the terms defined in `docs/product/UBIQUITOUS_LANGUAGE.md`.
 
 If you introduce a new concept, add it there first or explain why the existing vocabulary is insufficient.
 

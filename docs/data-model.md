@@ -139,6 +139,20 @@ The same source data can be rendered for different audiences:
 
 The AI Assistance Packet must not contain more truth than the Continuity Manual. It adds explicit chatbot instructions, safety boundaries, evidence, unknowns, and escalation rules.
 
+## Emerging model decisions not implemented yet
+
+Product discovery has identified several model concepts that are not implemented yet and require future Product Loop review before schema changes:
+
+- an Infrastructure Map as a recurring Operator-facing review surface
+- dependency graph rendering, initially using generic `depends_on` relationships
+- Runtime Services, such as Docker, for technical dependencies
+- Access Paths, such as Tailscale, when they affect access or help
+- lifecycle state for active and decommissioned entities
+- recommissioning review using previous metadata as defaults
+- role Visibility for Stress User, Helper Person, and Operator output
+
+These concepts should not be treated as available product behavior until implemented and tested.
+
 ## Current implementation
 
 The first implementation reads YAML files and renders Markdown.

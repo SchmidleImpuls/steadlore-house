@@ -67,13 +67,13 @@ v0 may include placeholders for future connectors, but it should not implement P
 
 ### Continuity before autonomy
 
-The first useful artifact is a trustworthy manual.
+The first useful household continuity artifact is a trustworthy manual. The first Operator setup value may come from an Infrastructure Map, but it must serve the same explanation and safety model.
 
 Do not build an agent that acts before the system can explain.
 
 ### Ubiquitous language before implementation
 
-Use the vocabulary in `docs/ubiquitous-language.md`.
+Use the vocabulary in `docs/product/UBIQUITOUS_LANGUAGE.md`.
 
 If new concepts are needed, update the vocabulary before spreading new terminology through code, docs, tests, examples, or issues.
 
@@ -261,10 +261,10 @@ At minimum, consider whether the change affects:
 - `README.md`
 - `AGENTS.md`
 - `CONTRIBUTING.md`
-- `docs/ubiquitous-language.md`
+- `docs/product/UBIQUITOUS_LANGUAGE.md`
 - `docs/data-model.md`
 - `docs/threat-model.md`
-- `docs/vision.md`
+- `docs/product/VISION.md`
 - examples
 - generated manual output
 

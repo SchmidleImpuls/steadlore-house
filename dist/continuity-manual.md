@@ -1,6 +1,6 @@
 # Example Household Continuity Manual
 
-Generated: 2026-05-03T15:58:50.631605Z
+Generated: 2026-05-04T13:10:45.995576Z
 Audience: household members and trusted persons
 
 > This manual is a latest-known snapshot. It may be stale if Steadlore House could not detect recent breaking changes or failed generating or publishing a newer manual.
@@ -41,7 +41,7 @@ What you can do meanwhile:
 - Do not change automations or smart-home settings while waiting for help.
 
 Useful links to try:
-- Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 13 days ago)
+- Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 14 days ago)
 
 Safe checks:
 - Try the physical wall switch for the affected light.
@@ -80,7 +80,7 @@ Importance: High
 If unavailable: Some lights, automations, sensors, and dashboards may not work. Internet and Wi-Fi are not necessarily affected.
 
 Open here:
-- Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 13 days ago)
+- Home Assistant dashboard: `http://homeassistant.local:8123` (last checked 14 days ago)
 
 ## For Helper Persons
 
@@ -90,13 +90,24 @@ This section is for someone contacted by the stressed household member. It may u
 
 - **Lights or automations are not working:** Home Assistant may not have returned correctly after container maintenance. Check container status and logs before any restart or rollback. A restart is not a first check for a stressed household member.
 
+### Dependency Graph
+
+This graph shows reviewed Manual Inventory dependencies. It is latest-known structure, not live monitoring or remediation guidance.
+
+```mermaid
+flowchart TD
+  home_assistant["Service: Home Assistant<br/>STALE; manually_confirmed"]
+  house_server_01["Device: House Server 01<br/>STALE; manually_confirmed"]
+  home_assistant -->|depends on| house_server_01
+```
+
 ### Service Evidence
 
 #### Home Assistant
 
 Facts:
-- Home Assistant is managed as a container named homeassistant. [current; source: manual inventory; status: manually_confirmed; confidence: medium; last verified: 2026-04-20T12:00:00Z; age: 13 days; freshness window: 14 days]
-- Home Assistant provides convenience automations, not the primary internet connection. [current; source: operator note; status: manually_confirmed; confidence: high; last verified: 2026-04-15T12:00:00Z; age: 18 days; freshness window: 90 days]
+- Home Assistant is managed as a container named homeassistant. [STALE; source: manual inventory; status: manually_confirmed; confidence: medium; last verified: 2026-04-20T12:00:00Z; age: 14 days; freshness window: 14 days]
+- Home Assistant provides convenience automations, not the primary internet connection. [current; source: operator note; status: manually_confirmed; confidence: high; last verified: 2026-04-15T12:00:00Z; age: 19 days; freshness window: 90 days]
 
 ### Devices
 
@@ -108,4 +119,4 @@ Location: Utility cabinet shelf
 Household Impact: Runs household services. If unavailable, some local services may stop, but internet and Wi-Fi are not automatically affected. Do not unplug or reset this device unless a trusted technical helper asks you to.
 
 Facts:
-- Home Assistant is expected to run on this host as a container. [STALE; source: manual inventory; status: manually_confirmed; confidence: high; last verified: 2026-01-15T10:00:00Z; age: 108 days; freshness window: 30 days]
+- Home Assistant is expected to run on this host as a container. [STALE; source: manual inventory; status: manually_confirmed; confidence: high; last verified: 2026-01-15T10:00:00Z; age: 109 days; freshness window: 30 days]

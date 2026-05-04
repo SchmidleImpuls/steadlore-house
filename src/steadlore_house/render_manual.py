@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
+from .dependency_graph import build_dependency_graph, render_dependency_graph_mermaid
 from .models import Evidence, Fact, Inventory, Runbook
 from .policy import POLICY_DEFINITIONS
 from .staleness import age_in_days, is_stale
@@ -219,9 +220,24 @@ def _render_helper_section(runbooks: list[Runbook], inventory: Inventory, now: d
             lines.append(f"- **{runbook.symptom}:** {runbook.helper_note}")
         lines.append("")
 
+    lines.extend(_render_dependency_graph(inventory, now))
     lines.extend(_render_service_facts(inventory, now))
     lines.extend(_render_devices(inventory, now))
     return lines
+
+
+def _render_dependency_graph(inventory: Inventory, now: datetime) -> list[str]:
+    mermaid = render_dependency_graph_mermaid(build_dependency_graph(inventory, now=now))
+    if not mermaid:
+        return []
+    return [
+        "### Dependency Graph",
+        "",
+        "This graph shows reviewed Manual Inventory dependencies. It is latest-known structure, not live monitoring or remediation guidance.",
+        "",
+        mermaid,
+        "",
+    ]
 
 
 def _render_service_facts(inventory: Inventory, now: datetime) -> list[str]:

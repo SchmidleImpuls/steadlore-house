@@ -7,6 +7,7 @@ Keep this lightweight and update when module boundaries change.
 - Inventory Context: `src/steadlore_house/models.py`, inventory loading, validation.
 - Evidence and Staleness Context: `staleness.py`, evidence fields in models.
 - Continuity Manual Context: `render_manual.py`, `render_ai_packet.py`.
+- Dependency Graph Context: `dependency_graph.py` builds reviewed Manual Inventory dependency graphs and renders deterministic Mermaid Markdown.
 - Runbook Context: runbook models and examples under `examples/runbooks/`.
 - Policy Context: `policy.py`.
 - Connector/Discovery Context: `network_discovery.py` and snapshot renderers.
@@ -17,6 +18,7 @@ Keep this lightweight and update when module boundaries change.
 - `validation.py`: deterministic schema, relationship, secret, symptom-title, and policy validation checks.
 - `policy.py`: conservative deterministic action classification.
 - `network_discovery.py`: local passive discovery and opt-in nmap ping-scan parsing behind explicit functions.
+- `dependency_graph.py`: deterministic graph building and Mermaid rendering from reviewed Manual Inventory `depends_on` relationships.
 - Renderers: deterministic Markdown output from structured models.
 
 ## Shallow-module sprawl watch
@@ -25,7 +27,7 @@ No urgent module sprawl was identified during discovery, but upcoming graph, lif
 
 ## Important interfaces to design deliberately
 
-- Dependency graph model and builder.
+- Dependency graph model and builder beyond the first Manual Inventory `depends_on` Mermaid slice.
 - Infrastructure Map renderer.
 - Lifecycle/decommission/recommission validation.
 - Role visibility filtering.
@@ -33,7 +35,7 @@ No urgent module sprawl was identified during discovery, but upcoming graph, lif
 
 ## Testable boundaries
 
-- Graph builder from Inventory, Runbooks, Discovery Snapshot, and evidence inputs.
+- Graph builder from reviewed Manual Inventory dependencies and evidence inputs.
 - Mermaid renderer from graph model.
 - Infrastructure Map renderer from reviewed inventory plus rediscovery results.
 - Lifecycle validator for decommissioned references and conflicts.

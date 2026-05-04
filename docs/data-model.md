@@ -144,7 +144,6 @@ The AI Assistance Packet must not contain more truth than the Continuity Manual.
 Product discovery has identified several model concepts that are not implemented yet and require future Product Loop review before schema changes:
 
 - an Infrastructure Map as a recurring Operator-facing review surface
-- dependency graph rendering, initially using generic `depends_on` relationships
 - Runtime Services, such as Docker, for technical dependencies
 - Access Paths, such as Tailscale, when they affect access or help
 - lifecycle state for active and decommissioned entities
@@ -171,6 +170,7 @@ Implemented now:
 - deterministic Continuity Manual rendering
 - deterministic AI Assistance Packet rendering
 - deterministic v0 policy classification for action guidance
+- dependency graph rendering in the Continuity Manual from reviewed Manual Inventory `depends_on` relationships, initially using Mermaid Markdown
 
 Not implemented yet:
 

@@ -21,6 +21,10 @@ def test_render_manual_includes_staleness_and_modes() -> None:
     assert "### Lights or automations are not working" in manual
     assert "## Who Can Help" in manual
     assert "## For Helper Persons" in manual
+    assert "### Dependency Graph" in manual
+    assert "```mermaid" in manual
+    assert "home_assistant -->|depends on| house_server_01" in manual
+    assert "Device: House Server 01<br/>STALE; manually_confirmed" in manual
     assert "Core infrastructure: No" in manual
     assert "### Symptom Notes" in manual
     assert "What you can do meanwhile:" in manual
@@ -36,10 +40,12 @@ def test_render_manual_includes_staleness_and_modes() -> None:
 
     common_problem_index = manual.index("## Common Problems")
     helper_index = manual.index("## For Helper Persons")
+    graph_index = manual.index("### Dependency Graph")
     container_index = manual.index("container maintenance")
     facts_index = manual.index("Facts:")
-    assert common_problem_index < helper_index < container_index
-    assert helper_index < facts_index
+    assert common_problem_index < helper_index < graph_index
+    assert helper_index < container_index
+    assert graph_index < facts_index
 
 
 def test_render_manual_with_inventory_only_explains_missing_sections() -> None:
@@ -51,6 +57,7 @@ def test_render_manual_with_inventory_only_explains_missing_sections() -> None:
     assert "No people have been added yet" in manual
     assert "No services have been added yet" in manual
     assert "### Service Evidence" not in manual
+    assert "### Dependency Graph" not in manual
     assert "### Devices" in manual
 
 

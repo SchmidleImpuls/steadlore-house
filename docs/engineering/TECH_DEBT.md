@@ -34,12 +34,12 @@ Prefer deep modules with simple interfaces over shallow module sprawl.
 - Retirement trigger: local web UI Product Loop after dependency graph and Infrastructure Map are coherent.
 - Owner/role: Product Steward and Developer Agent.
 
-### Missing dependency graph model
+### Partial dependency graph model
 
-- Introduced in: initial manual/data-model focus.
-- Why accepted: manual generation and validation came first.
-- Consequence if ignored: Infrastructure Map cannot deliver first Operator setup value.
-- Retirement trigger: dependency graph model and Mermaid rendering increment.
+- Introduced in: initial Manual Inventory `depends_on` Mermaid rendering.
+- Why accepted: the first useful slice validates dependency graph value in the Continuity Manual before broader Infrastructure Map semantics.
+- Consequence if ignored: graph meaning may remain limited to generic Service dependencies and entity-level Evidence labels.
+- Retirement trigger: Infrastructure Map graph increment with any needed Runtime Service, Access Path, lifecycle, and dependency Evidence decisions.
 - Owner/role: Developer Agent.
 
 ### No lifecycle state
